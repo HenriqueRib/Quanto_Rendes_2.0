@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:quanto/util/constants.dart';
 import 'aplicacao.dart';
 
 class Cadastro extends StatefulWidget {
@@ -61,7 +62,7 @@ class _CadastroState extends State<Cadastro> {
   void getHttp() async {
     try {
       var response = await Dio().post(
-        'http://10.0.0.142:3000/mobile/registercustom',
+        "${Constants.baseUrl}/mobile/registercustom",
         data: {
           'name': _controllerNome.text,
           'email': _controllerEmail.text,
@@ -69,27 +70,38 @@ class _CadastroState extends State<Cadastro> {
           'password_confirmation': _controllerConfirmarSenha.text,
         },
         options: Options(
-            followRedirects: false,
-            validateStatus: (status) {
-              return status! < 500;
-            }),
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
       );
-
-      setState(() {
-        _mensagemErro = "Cadastrado com sucesso!";
-      });
-
       // ignore: avoid_print
-      print('Oiiiiii');
+      print("RESPONSE");
       // ignore: avoid_print
-      print(response.data);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Home()));
+      print(response.data['success']);
+
+      if (response.data['success'] == false) {
+        setState(
+          () {
+            _mensagemErro = response.data['error'];
+          },
+        );
+      }
+
+      if (response.data['success'] == true) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Home(),
+          ),
+        );
+      }
     } catch (e) {
       setState(() {
-        _mensagemErro = "Erro!";
+        _mensagemErro =
+            "Aconteceu algum erro com o servidor! Tente novamente mais tarde.";
       });
-
       // ignore: avoid_print
       print('ERRROOOOOOO');
       // ignore: avoid_print

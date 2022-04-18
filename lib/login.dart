@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:quanto/aplicacao.dart';
 import 'package:dio/dio.dart';
+import 'package:quanto/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cadastro.dart';
 
@@ -47,12 +48,8 @@ class _LoginState extends State<Login> {
     final prefs = await SharedPreferences.getInstance();
 
     try {
-      var response =
-          // await Dio().post('https://codeline43.com.br/login', data: {
-          await Dio().post(
-        'http://10.0.2.2:8000/login',
-        //   await Dio().post(
-        // 'http://10.0.0.142:3000/login',
+      var response = await Dio().post(
+        "${Constants.baseUrl}/login",
         data: {
           'email': _controllerEmail.text,
           'password': _controllerSenha.text,
