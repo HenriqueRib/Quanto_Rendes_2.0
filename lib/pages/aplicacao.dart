@@ -1,29 +1,29 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
-import 'package:quanto/TelaResposta.dart';
+import 'package:quanto/pages/TelaResposta.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Aplicacao extends StatefulWidget {
+  const Aplicacao({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _AplicacaoState createState() => _AplicacaoState();
 }
 
-class _HomeState extends State<Home> {
+class _AplicacaoState extends State<Aplicacao> {
   final TextEditingController _controllerkmFinal = TextEditingController();
   final TextEditingController _controllerkmInicial = TextEditingController();
   final TextEditingController _controllerQtdCombustivel =
       TextEditingController();
   String _textoResultado = "Descubra quanto que seu carro está rendendo";
-
   // ignore: unused_field
   int _selectedIndex = 0;
-
   // ignore: unused_element
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(
+      () {
+        _selectedIndex = index;
+      },
+    );
     if (index == 1) {}
   }
 
@@ -45,10 +45,12 @@ class _HomeState extends State<Home> {
               "km por Combustível!";
         });
       }
-    } catch (e) {
-      setState(() {
-        _textoResultado = "Preencha os campos para calcular";
-      });
+    } catch (_) {
+      setState(
+        () {
+          _textoResultado = "Preencha os campos para calcular";
+        },
+      );
     }
   }
 

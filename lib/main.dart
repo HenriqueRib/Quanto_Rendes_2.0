@@ -1,9 +1,14 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'aplicacao.dart';
-import 'login.dart';
+import 'package:quanto/menu/configuracao.dart';
+import 'package:quanto/menu/guillotine.dart';
+import 'package:quanto/menu/marcar.dart';
+import 'package:quanto/menu/visualizar.dart';
+import 'package:quanto/pages/aplicacao.dart';
+import 'package:quanto/pages/login.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quanto/pages/menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences? sharedPreferences;
@@ -53,7 +58,13 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         home: const Login(),
         routes: {
-          '/home': (context) => const Home(),
+          '/tela_principal': (context) => const Guillotine(),
+          '/menu': (context) => const Menu(),
+          '/login': (context) => const Login(),
+          '/marcar': (context) => const Marcar(),
+          '/aplicacao': (context) => const Aplicacao(),
+          '/visualizar': (context) => const Visualizar(),
+          '/configuracao': (context) => const Configuracao(),
         },
       ),
     );

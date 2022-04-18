@@ -13,22 +13,13 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
-  // ignore: unused_field
   final TextEditingController _controllerNome = TextEditingController(text: "");
-
-  // ignore: unused_field
   final TextEditingController _controllerEmail =
       TextEditingController(text: "");
-
-  // ignore: unused_field
   final TextEditingController _controllerSenha =
       TextEditingController(text: "");
-
-  // ignore: unused_field
   final TextEditingController _controllerConfirmarSenha =
       TextEditingController(text: "");
-
-  // ignore: unused_field
   String _mensagemErro = "";
 
   _validarCampos() {
@@ -80,7 +71,6 @@ class _CadastroState extends State<Cadastro> {
       print("RESPONSE");
       // ignore: avoid_print
       print(response.data['success']);
-
       if (response.data['success'] == false) {
         setState(
           () {
@@ -88,12 +78,11 @@ class _CadastroState extends State<Cadastro> {
           },
         );
       }
-
       if (response.data['success'] == true) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Home(),
+            builder: (context) => const Aplicacao(),
           ),
         );
       }
@@ -145,7 +134,6 @@ class _CadastroState extends State<Cadastro> {
                   controller: _controllerNome,
                   style: const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.text,
-                  // ignore: prefer_const_constructors
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
                     labelText: 'Nome',
@@ -172,7 +160,6 @@ class _CadastroState extends State<Cadastro> {
                     autofocus: false,
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(fontSize: 20, color: Colors.white),
-                    // ignore: prefer_const_constructors
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(),
                       labelText: 'E-mail',
@@ -198,7 +185,6 @@ class _CadastroState extends State<Cadastro> {
                   style: const TextStyle(color: Colors.white),
                   obscureText: true,
                   keyboardType: TextInputType.text,
-                  // ignore: prefer_const_constructors
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
                     labelText: 'Senha',
@@ -223,7 +209,6 @@ class _CadastroState extends State<Cadastro> {
                   style: const TextStyle(color: Colors.white),
                   obscureText: true,
                   keyboardType: TextInputType.text,
-                  // ignore: prefer_const_constructors
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
                     labelText: 'Confirmar Senha',
@@ -246,17 +231,19 @@ class _CadastroState extends State<Cadastro> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: RaisedButton(
-                      child: const Text(
-                        "Cadastrar",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      color: const Color(0xff91998A),
-                      padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32)),
-                      onPressed: () {
-                        _validarCampos();
-                      }),
+                    child: const Text(
+                      "Cadastrar",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    color: const Color(0xff91998A),
+                    padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    onPressed: () {
+                      _validarCampos();
+                    },
+                  ),
                 ),
               ],
             ),

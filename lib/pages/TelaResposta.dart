@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:quanto/aplicacao.dart';
+import 'package:quanto/pages/aplicacao.dart';
 import 'package:quanto/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'home.dart';
@@ -21,12 +21,10 @@ class _TelaRespostaState extends State<TelaResposta> {
   void _salvarInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final String? _email = prefs.getString('email');
-
     // ignore: avoid_print
     print("estou tentando");
     // ignore: avoid_print
     print(_email);
-
     try {
       var response = await Dio().post(
         "${Constants.baseUrl}/mobile/verifica",
@@ -43,7 +41,6 @@ class _TelaRespostaState extends State<TelaResposta> {
 
       // ignore: avoid_print
       print('Ok ${response.data}');
-
       Navigator.pushReplacementNamed(context, "/home");
     } catch (e) {
       // ignore: avoid_print
@@ -124,7 +121,7 @@ class _TelaRespostaState extends State<TelaResposta> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Home(),
+                                  builder: (context) => const Aplicacao(),
                                 ),
                               );
                             },

@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
-import 'package:quanto/aplicacao.dart';
 import 'package:dio/dio.dart';
+import 'package:quanto/pages/aplicacao.dart';
 import 'package:quanto/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cadastro.dart';
@@ -19,6 +19,8 @@ class _LoginState extends State<Login> {
   final TextEditingController _controllerSenha =
       TextEditingController(text: "");
   String _mensagemErro = "";
+  String loginController = '';
+  FocusNode focus = FocusNode();
 
   _validarCampos() {
     //Recupera dados dos campos
@@ -31,7 +33,7 @@ class _LoginState extends State<Login> {
           _mensagemErro = "";
         });
 
-        getHttp();
+        _fazerLogin();
       } else {
         setState(() {
           _mensagemErro = "Preencha a senha!";
@@ -44,11 +46,10 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void getHttp() async {
+  void _fazerLogin() async {
     final prefs = await SharedPreferences.getInstance();
-
     try {
-      var response = await Dio().post(
+      await Dio().post(
         "${Constants.baseUrl}/login",
         data: {
           'email': _controllerEmail.text,
@@ -60,35 +61,23 @@ class _LoginState extends State<Login> {
               return status! < 500;
             }),
       );
-
-      setState(() {
-        _mensagemErro = "Cadastrado com sucesso!";
-      });
       await prefs.setString('email', _controllerEmail.text);
-
-      // ignore: avoid_print
-      print('Ok ${response.data}');
-
-      Navigator.pushReplacementNamed(context, "/home");
+      Navigator.pushReplacementNamed(context, "/tela_principal");
     } catch (e) {
       setState(() {
         _mensagemErro = "Erro!";
       });
-
       // ignore: avoid_print
       print('ERRROOOOOOO -> $e');
     }
   }
 
-  String loginController = '';
-
   // _logarUsuario(Usuario usuario) {}
-
-  Future _verificarUsuarioLogado() async {}
+  // Future _verificarUsuarioLogado() async {}
 
   @override
   void initState() {
-    _verificarUsuarioLogado();
+    // _verificarUsuarioLogado();
     super.initState();
   }
 
@@ -133,7 +122,6 @@ class _LoginState extends State<Login> {
                     autofocus: false,
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(fontSize: 20, color: Colors.white),
-                    // ignore: prefer_const_constructors
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(),
                       labelText: 'E-mail',
@@ -148,8 +136,6 @@ class _LoginState extends State<Login> {
                         },
                         icon: Icon(
                           loginController != ''
-                              // &&
-                              //         loginController.email!.length > 0
                               ? Icons.clear
                               : Icons.email_outlined,
                           color: Colors.white,
@@ -163,7 +149,6 @@ class _LoginState extends State<Login> {
                   obscureText: true,
                   style: const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.text,
-                  // ignore: prefer_const_constructors
                   decoration: InputDecoration(
                     border: const UnderlineInputBorder(),
                     labelText: 'Senha',
@@ -177,11 +162,7 @@ class _LoginState extends State<Login> {
                         // loginController.clearField('email');
                       },
                       icon: Icon(
-                        loginController != ''
-                            // &&
-                            //         loginController.email!.length > 0
-                            ? Icons.clear
-                            : Icons.lock,
+                        loginController != '' ? Icons.clear : Icons.lock,
                         color: Colors.white,
                       ),
                     ),
@@ -190,32 +171,38 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: RaisedButton(
-                      color: const Color(0xff91998A),
-                      padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32)),
-                      onPressed: () {
-                        _validarCampos();
-                      },
-                      child: const Text(
-                        "Entrar",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      )),
+                    color: const Color(0xff91998A),
+                    padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    onPressed: () {
+                      _validarCampos();
+                    },
+                    child: const Text(
+                      "Entrar",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 0),
                 ),
                 Center(
                   child: GestureDetector(
-                    child: const Text("Não tem conta? cadastre-se!",
-                        style: TextStyle(
-                          color: Colors.white,
-                        )),
+                    child: const Text(
+                      "Não tem conta? cadastre-se!",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Cadastro()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Cadastro(),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -235,7 +222,7 @@ class _LoginState extends State<Login> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const Home(),
+                          builder: (context) => const Aplicacao(),
                         ),
                       );
                     },
