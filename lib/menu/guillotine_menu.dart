@@ -20,11 +20,6 @@ class _GuillotineMenuState extends State<GuillotineMenu>
   // ignore: non_constant_identifier_names, prefer_final_fields
   String _menu_title = 'Ola';
   final List<Map> _menus = <Map>[
-    // {
-    //   "icon": Icons.person,
-    //   "title": "Perfil",
-    //   "color": Colors.teal,
-    // },
     {
       "icon": Icons.view_agenda,
       "title": "Visualizar",
@@ -43,11 +38,17 @@ class _GuillotineMenuState extends State<GuillotineMenu>
       "color": Colors.teal,
       'route': "/marcar"
     },
+    // {
+    //   "icon": Icons.settings,
+    //   "title": "Configuração",
+    //   "color": Colors.teal,
+    //   'route': "/configuracao"
+    // },
     {
-      "icon": Icons.settings,
-      "title": "Configuração",
+      "icon": Icons.person,
+      "title": "Perfil",
       "color": Colors.teal,
-      'route': "/configuracao"
+      'route': "/perfil"
     },
     {
       "icon": Icons.login,

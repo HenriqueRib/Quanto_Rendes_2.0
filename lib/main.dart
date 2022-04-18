@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quanto/menu/configuracao.dart';
 import 'package:quanto/menu/guillotine.dart';
 import 'package:quanto/menu/marcar.dart';
+import 'package:quanto/menu/perfil.dart';
 import 'package:quanto/menu/visualizar.dart';
 import 'package:quanto/pages/aplicacao.dart';
 import 'package:quanto/pages/login.dart';
@@ -61,6 +62,7 @@ class _MyAppState extends State<MyApp> {
           '/tela_principal': (context) => const Guillotine(),
           '/menu': (context) => const Menu(),
           '/login': (context) => const Login(),
+          '/perfil': (context) => const Perfil(),
           '/marcar': (context) => const Marcar(),
           '/aplicacao': (context) => const Aplicacao(),
           '/visualizar': (context) => const Visualizar(),
