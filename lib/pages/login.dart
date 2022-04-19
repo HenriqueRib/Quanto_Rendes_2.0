@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
   void _fazerLogin() async {
     final prefs = await SharedPreferences.getInstance();
     try {
-      await Dio().post(
+      var response = await Dio().post(
         "${Constants.baseUrl}/login",
         data: {
           'email': _controllerEmail.text,
@@ -61,8 +61,19 @@ class _LoginState extends State<Login> {
               return status! < 500;
             }),
       );
+
+      // ignore: avoid_print
+      print('Ok ${response.data}');
+      if (response.data.contains("Não Encontrado")) {
+        // ignore: avoid_print
+        print('Ok Sim if');
+      } else {
+        // ignore: avoid_print
+        print('Ok sim else');
+      }
+
       await prefs.setString('email', _controllerEmail.text);
-      Navigator.pushReplacementNamed(context, "/tela_principal");
+      // Navigator.pushReplacementNamed(context, "/tela_principal");
     } catch (e) {
       setState(() {
         _mensagemErro = "Erro!";
