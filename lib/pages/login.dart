@@ -1,8 +1,8 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_print
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:quanto/dio_config.dart';
 import 'package:quanto/pages/aplicacao.dart';
-import 'package:quanto/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cadastro.dart';
 
@@ -49,37 +49,26 @@ class _LoginState extends State<Login> {
   void _fazerLogin() async {
     final prefs = await SharedPreferences.getInstance();
     try {
-      var response = await Dio().post(
-        "${Constants.baseUrl}/login",
-        data: {
-          'email': _controllerEmail.text,
-          'password': _controllerSenha.text,
+      FormData data = FormData.fromMap({
+        'email': _controllerEmail.text,
+        'password': _controllerSenha.text,
+      });
+
+      Response res = await dioInstance().post("/auth/login", data: data);
+
+      print('Ok ${res.data}');
+      if (res.data['status'] == 'success') {
+        await prefs.setString('email', _controllerEmail.text);
+        //Navigator.pushReplacementNamed(context, "/tela_principal");
+      }
+    } catch (e) {
+      setState(
+        () {
+          _mensagemErro = "Erro! Tente novamente mais tarde.";
         },
-        options: Options(
-            followRedirects: false,
-            validateStatus: (status) {
-              return status! < 500;
-            }),
       );
 
-      // ignore: avoid_print
-      print('Ok ${response.data}');
-      if (response.data.contains("Não Encontrado")) {
-        // ignore: avoid_print
-        print('Ok Sim if');
-      } else {
-        // ignore: avoid_print
-        print('Ok sim else');
-      }
-
-      await prefs.setString('email', _controllerEmail.text);
-      // Navigator.pushReplacementNamed(context, "/tela_principal");
-    } catch (e) {
-      setState(() {
-        _mensagemErro = "Erro!";
-      });
-      // ignore: avoid_print
-      print('ERRROOOOOOO -> $e');
+      print('ERRO $e');
     }
   }
 
