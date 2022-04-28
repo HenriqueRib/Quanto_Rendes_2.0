@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
       print('Ok ${res.data}');
       if (res.data['status'] == 'success') {
         await prefs.setString('email', _controllerEmail.text);
-        //Navigator.pushReplacementNamed(context, "/tela_principal");
+        Navigator.pushReplacementNamed(context, "/tela_principal");
       }
     } catch (e) {
       setState(

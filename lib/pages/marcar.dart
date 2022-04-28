@@ -11,10 +11,6 @@ class _MarcarPageState extends State<MarcarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Guardar Info'),
-        backgroundColor: Colors.teal,
-      ),
       body: Container(
         color: Colors.teal[900],
         padding: const EdgeInsets.all(20),

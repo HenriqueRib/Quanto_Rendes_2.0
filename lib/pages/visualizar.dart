@@ -11,10 +11,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Visualizar'),
-        backgroundColor: Colors.teal,
-      ),
       body: Container(
         color: Colors.teal[900],
         padding: const EdgeInsets.all(20),

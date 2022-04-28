@@ -14,10 +14,6 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Perfil'),
-        backgroundColor: Colors.teal,
-      ),
       body: Container(
         color: Colors.teal[900],
         padding: const EdgeInsets.all(10),
