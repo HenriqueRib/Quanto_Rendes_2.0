@@ -62,13 +62,18 @@ class _LoginState extends State<Login> {
         Navigator.pushReplacementNamed(context, "/tela_principal");
       }
     } catch (e) {
+      String message = "Erro! Tente novamente mais tarde.";
+      if (e is DioError) {
+        if (e.response?.data['message'] != null) {
+          message = e.response?.data['message'];
+        }
+      }
+      print('ERRO $e');
       setState(
         () {
-          _mensagemErro = "Erro! Tente novamente mais tarde.";
+          _mensagemErro = message;
         },
       );
-
-      print('ERRO $e');
     }
   }
 
