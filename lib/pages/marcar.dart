@@ -1,7 +1,12 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_print
 
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:quanto/pages/TelaResposta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../dio_config.dart';
+// import 'package:quanto/pages/TelaResposta.dart';
 
 class MarcarPage extends StatefulWidget {
   const MarcarPage({Key? key}) : super(key: key);
@@ -19,7 +24,6 @@ class _MarcarPageState extends State<MarcarPage> {
   final TextEditingController _controllerPosto = TextEditingController();
 
   String dropdownValue = 'Etanol';
-
   String _textoResultado = "Registre seu abastecimento";
   final FocusNode _focusKmAtual = FocusNode();
   final FocusNode _focusValorLitro = FocusNode();
@@ -27,28 +31,103 @@ class _MarcarPageState extends State<MarcarPage> {
   final FocusNode _focusQtdLitro = FocusNode();
   final FocusNode _focusPosto = FocusNode();
 
-  _calcularkm() {
-    try {
-      int kmfinal = int.parse(_controllerkmAtual.text);
-      int kminicial = int.parse(_controllerValorLitro.text);
-      double qtdCombustivel = double.parse(_controllerValorReais.text);
-      int resultado;
-      double _kmPorLitro;
+  void _salvarAbastecimento() async {
+    final prefs = await SharedPreferences.getInstance();
 
-      resultado = kmfinal - kminicial;
-      if (resultado > 0 || resultado <= 0) {
-        setState(() {
-          _kmPorLitro = resultado / qtdCombustivel;
-          _textoResultado = "Desta vez seu carro fez " +
-              _kmPorLitro.toStringAsFixed(
-                  _kmPorLitro.truncateToDouble() == _kmPorLitro ? 0 : 2) +
-              "km por Combustível!";
-        });
+    try {
+      final String? _email = prefs.getString('email'); // Recuperar
+      final int? _id = prefs.getInt('id'); // Recuperar
+
+      if (_email == null || _id == null) {
+        setState(
+          () {
+            _textoResultado =
+                "Acredite se quiser ... voce não esta logado. \nFaça o Login por gentileza para salvar.";
+          },
+        );
+        return;
       }
-    } catch (_) {
+
+      try {
+        double kmAtual = double.parse(_controllerkmAtual.text);
+        double valorLitro = double.parse(_controllerValorLitro.text);
+        double valorReais = double.parse(_controllerValorReais.text);
+        double qtdLitrodAbastecido =
+            double.parse(_controllerQtdLitrosAbastecido.text);
+        String posto = _controllerPosto.text;
+        String tipoCombustivel = dropdownValue;
+
+        try {
+          if (_controllerkmAtual.text.toString().contains(",") ||
+              _controllerValorLitro.text.contains(",") ||
+              _controllerValorReais.text.contains(",") ||
+              _controllerQtdLitrosAbastecido.text.contains(",")) {
+            setState(
+              () {
+                _textoResultado =
+                    "Algo de errado não esta certo ...\nSubistua Vírgula , por ponto .";
+              },
+            );
+            return;
+          }
+        } catch (_) {
+          print('não deu certo');
+        }
+
+        FormData data = FormData.fromMap(
+          {
+            'km_atual': kmAtual,
+            'valor_litro': valorLitro,
+            'valor_reais': valorReais,
+            'qtd_litro_abastecido': qtdLitrodAbastecido,
+            'posto': posto,
+            'tipo_combustivel': tipoCombustivel,
+            'email': _email,
+            'id': _id,
+          },
+        );
+
+        print('teste ->');
+        print(kmAtual);
+        print(valorLitro);
+        print(valorReais);
+        print(qtdLitrodAbastecido);
+        print(posto);
+        print(tipoCombustivel);
+        print(_email);
+        print(_id);
+
+        Response res = await dioInstance()
+            .post("/quanto_rendes/registrar_abastecimento", data: data);
+        print('Ok ${res.data}');
+        // if (res.data['status'] == 'success') {
+        //   // await prefs.setString('email', _controllerEmail.text);
+        //   Navigator.pushReplacementNamed(context, "/tela_principal");
+        // }
+
+        setState(
+          () {
+            _textoResultado = "Sucesso";
+          },
+        );
+      } catch (_) {
+        setState(
+          () {
+            _textoResultado = "Possivelmente um campo em Branco";
+          },
+        );
+      }
+    } catch (e) {
+      String message = "Erro! Tente novamente mais tarde.";
+      if (e is DioError) {
+        if (e.response?.data['message'] != null) {
+          message = e.response?.data['message'];
+        }
+      }
+      print('ERRO $e');
       setState(
         () {
-          _textoResultado = "Preencha os campos para calcular";
+          _textoResultado = message;
         },
       );
     }
@@ -60,6 +139,8 @@ class _MarcarPageState extends State<MarcarPage> {
       _controllerkmAtual.clear();
       _controllerValorLitro.clear();
       _controllerValorReais.clear();
+      _controllerQtdLitrosAbastecido.clear();
+      _controllerPosto.clear();
     });
   }
 
@@ -100,7 +181,7 @@ class _MarcarPageState extends State<MarcarPage> {
                     focusNode: _focusKmAtual,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: "Km Atual, ex: 73111",
+                      labelText: "Km Atual, ex: 118877.5",
                       suffixIcon: IconButton(
                         onPressed: () => _controllerkmAtual.clear(),
                         icon: const Icon(
@@ -133,7 +214,7 @@ class _MarcarPageState extends State<MarcarPage> {
                     focusNode: _focusValorReais,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: "Valor em reais, ex: 150.00",
+                      labelText: "Valor em reais, ex: 209.09",
                       suffixIcon: IconButton(
                         onPressed: () => _controllerValorReais.clear(),
                         icon: const Icon(
@@ -249,22 +330,22 @@ class _MarcarPageState extends State<MarcarPage> {
                           textColor: Colors.white,
                           padding: const EdgeInsets.all(15),
                           child: const Text(
-                            "Calcular",
+                            "Salvar",
                             style: TextStyle(
                               fontSize: 20,
                             ),
                           ),
-                          //onPressed: _calcularkm
+                          //onPressed: _salvarAbastecimento
                           onPressed: () {
-                            _calcularkm();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TelaResposta(
-                                  valor: _textoResultado,
-                                ),
-                              ),
-                            );
+                            _salvarAbastecimento();
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => TelaResposta(
+                            //       valor: _textoResultado,
+                            //     ),
+                            //   ),
+                            // );
                           },
                         ),
                       ),

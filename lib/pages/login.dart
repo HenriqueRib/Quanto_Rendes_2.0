@@ -56,9 +56,12 @@ class _LoginState extends State<Login> {
 
       Response res = await dioInstance().post("/auth/login", data: data);
 
-      print('Ok ${res.data}');
+      print('Ok ${res.data['user']['name']}');
       if (res.data['status'] == 'success') {
         await prefs.setString('email', _controllerEmail.text);
+        await prefs.setString('nome', res.data['user']['name']);
+        await prefs.setInt('id', res.data['user']['id']);
+        await prefs.setInt('level', res.data['user']['level']);
         Navigator.pushReplacementNamed(context, "/tela_principal");
       }
     } catch (e) {
