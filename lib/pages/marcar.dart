@@ -1,7 +1,4 @@
 // ignore_for_file: deprecated_member_use, avoid_print
-
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,14 +19,13 @@ class _MarcarPageState extends State<MarcarPage> {
   final TextEditingController _controllerQtdLitrosAbastecido =
       TextEditingController();
   final TextEditingController _controllerPosto = TextEditingController();
-
-  String dropdownValue = 'Etanol';
-  String _textoResultado = "Registre seu abastecimento";
   final FocusNode _focusKmAtual = FocusNode();
   final FocusNode _focusValorLitro = FocusNode();
   final FocusNode _focusValorReais = FocusNode();
   final FocusNode _focusQtdLitro = FocusNode();
   final FocusNode _focusPosto = FocusNode();
+  String dropdownValue = 'Etanol';
+  String _textoResultado = "Registre seu abastecimento";
 
   void _salvarAbastecimento() async {
     final prefs = await SharedPreferences.getInstance();
@@ -38,98 +34,106 @@ class _MarcarPageState extends State<MarcarPage> {
       final String? _email = prefs.getString('email'); // Recuperar
       final int? _id = prefs.getInt('id'); // Recuperar
 
-      if (_email == null || _id == null) {
-        setState(
-          () {
-            _textoResultado =
-                "Acredite se quiser ... voce não esta logado. \nFaça o Login por gentileza para salvar.";
-          },
-        );
+      if (_email == null && _id == null) {
+        setState(() {
+          _textoResultado =
+              "Acredite se quiser ... voce não esta logado. \nFaça o Login por gentileza para salvar.";
+        });
         return;
       }
 
-      try {
-        double kmAtual = double.parse(_controllerkmAtual.text);
-        double valorLitro = double.parse(_controllerValorLitro.text);
-        double valorReais = double.parse(_controllerValorReais.text);
-        double qtdLitrodAbastecido =
-            double.parse(_controllerQtdLitrosAbastecido.text);
-        String posto = _controllerPosto.text;
-        String tipoCombustivel = dropdownValue;
+      //Verifica se o campo esta vazio
+      // _controllerkmAtual.text == ''
+      //     ? _controllerkmAtual.text = '0'
+      //     : _controllerkmAtual.text;
 
-        try {
-          if (_controllerkmAtual.text.toString().contains(",") ||
-              _controllerValorLitro.text.contains(",") ||
-              _controllerValorReais.text.contains(",") ||
-              _controllerQtdLitrosAbastecido.text.contains(",")) {
-            setState(
-              () {
-                _textoResultado =
-                    "Algo de errado não esta certo ...\nSubistua Vírgula , por ponto .";
-              },
-            );
-            return;
-          }
-        } catch (_) {
-          print('não deu certo');
-        }
+      // _controllerValorLitro.text == ''
+      //     ? _controllerValorLitro.text = '0'
+      //     : _controllerValorLitro.text;
 
-        FormData data = FormData.fromMap(
-          {
-            'km_atual': kmAtual,
-            'valor_litro': valorLitro,
-            'valor_reais': valorReais,
-            'qtd_litro_abastecido': qtdLitrodAbastecido,
-            'posto': posto,
-            'tipo_combustivel': tipoCombustivel,
-            'email': _email,
-            'id': _id,
-          },
-        );
+      // _controllerValorReais.text == ''
+      //     ? _controllerValorReais.text = '0'
+      //     : _controllerValorReais.text;
 
-        print('teste ->');
-        print(kmAtual);
-        print(valorLitro);
-        print(valorReais);
-        print(qtdLitrodAbastecido);
-        print(posto);
-        print(tipoCombustivel);
-        print(_email);
-        print(_id);
+      // _controllerQtdLitrosAbastecido.text == ''
+      //     ? _controllerQtdLitrosAbastecido.text = '0'
+      //     : _controllerQtdLitrosAbastecido.text;
 
-        Response res = await dioInstance()
-            .post("/quanto_rendes/registrar_abastecimento", data: data);
-        print('Ok ${res.data}');
-        // if (res.data['status'] == 'success') {
-        //   // await prefs.setString('email', _controllerEmail.text);
-        //   Navigator.pushReplacementNamed(context, "/tela_principal");
-        // }
+      if (_controllerkmAtual.text.toString().contains(",") ||
+          _controllerValorLitro.text.contains(",") ||
+          _controllerValorReais.text.contains(",") ||
+          _controllerQtdLitrosAbastecido.text.contains(",")) {
+        setState(() {
+          _textoResultado =
+              "Algo de errado não esta certo ...\nSubistua Vírgula , por ponto .";
+        });
+        return;
+      }
 
-        setState(
-          () {
-            _textoResultado = "Sucesso";
-          },
-        );
-      } catch (_) {
-        setState(
-          () {
-            _textoResultado = "Possivelmente um campo em Branco";
-          },
-        );
+      // double kmAtual = double.parse(_controllerkmAtual.text);
+      // double valorLitro = double.parse(_controllerValorLitro.text);
+      // double valorReais = double.parse(_controllerValorReais.text);
+      // double qtdLitrodAbastecido =
+      //     double.parse(_controllerQtdLitrosAbastecido.text);
+      // String posto = _controllerPosto.text;
+      // String tipoCombustivel = dropdownValue;
+
+      FormData data = FormData.fromMap({
+        'km_atual': _controllerkmAtual.text,
+        'valor_litro': _controllerValorLitro.text,
+        'valor_reais': _controllerValorReais.text,
+        'qtd_litro_abastecido': _controllerQtdLitrosAbastecido.text,
+        'posto': _controllerPosto.text,
+        'tipo_combustivel': dropdownValue,
+        'email_user': _email,
+        'id_user': _id,
+      });
+
+      //       FormData data = FormData.fromMap({
+      //   'km_atual': kmAtual,
+      //   'valor_litro': valorLitro,
+      //   'valor_reais': valorReais,
+      //   'qtd_litro_abastecido': qtdLitrodAbastecido,
+      //   'posto': posto,
+      //   'tipo_combustivel': tipoCombustivel,
+      //   'email_user': _email,
+      //   'id_user': _id,
+      // });
+
+      print('teste 1->');
+      // print(kmAtual);
+      // print(valorLitro);
+      // print(valorReais);
+      // print(qtdLitrodAbastecido);
+      // print(posto);
+      // print(tipoCombustivel);
+      // print(_email);
+      // print(_id);
+
+      Response res = await dioInstance()
+          .post("/quanto_rendes/registrar_abastecimento", data: data);
+      print('Ok ${res.data}');
+      if (res.data['status'] == 'success') {
+        // await prefs.setString('email', _controllerEmail.text);
+        // Navigator.pushReplacementNamed(context, "/tela_principal");
+
+        _limpar();
+        setState(() {
+          _textoResultado = "Informações Salva com Sucesso";
+        });
       }
     } catch (e) {
       String message = "Erro! Tente novamente mais tarde.";
       if (e is DioError) {
         if (e.response?.data['message'] != null) {
+          print('Ok ${e.response}');
           message = e.response?.data['message'];
         }
       }
       print('ERRO $e');
-      setState(
-        () {
-          _textoResultado = message;
-        },
-      );
+      setState(() {
+        _textoResultado = message;
+      });
     }
   }
 

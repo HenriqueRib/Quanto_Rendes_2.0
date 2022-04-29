@@ -1,11 +1,8 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:quanto/dio_config.dart';
-import 'package:quanto/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'aplicacao.dart';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({Key? key}) : super(key: key);
@@ -37,7 +34,7 @@ class _CadastroState extends State<Cadastro> {
           _mensagemErro = "";
         });
 
-        getHttp();
+        cadastrarNewUser();
 
         // _logarUsuario(usuario);
       } else {
@@ -52,8 +49,7 @@ class _CadastroState extends State<Cadastro> {
     }
   }
 
-  void getHttp() async {
-    print("testenado");
+  void cadastrarNewUser() async {
     final prefs = await SharedPreferences.getInstance();
     try {
       FormData data = FormData.fromMap({
@@ -63,25 +59,14 @@ class _CadastroState extends State<Cadastro> {
         'password_confirmation': _controllerConfirmarSenha.text,
       });
 
-      Response res =
-          await dioInstance().post("/auth/registercustom", data: data);
+      Response res = await dioInstance().post("/auth/register", data: data);
 
-      print('Ok ${res.data}');
-      if (res.data['status'] == 'success') {
-        // await prefs.setString('email', _controllerEmail.text);
-        // await prefs.setString('nome', res.data['user']['name']);
-        // await prefs.setInt('id', res.data['user']['id']);
-        // await prefs.setInt('level', res.data['user']['level']);
-        // Navigator.pushReplacementNamed(context, "/tela_principal");
+      if (res.data['success'] == true) {
+        await prefs.setString('email', _controllerEmail.text);
+        await prefs.setString('nome', _controllerNome.text);
+        await prefs.setInt('id', res.data['user']['id']);
+        Navigator.pushReplacementNamed(context, "/tela_principal");
       }
-
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => const Aplicacao(),
-      //   ),
-      // );
-
     } catch (e) {
       String message =
           "Aconteceu algum erro com o servidor! Tente novamente mais tarde.";
@@ -90,12 +75,10 @@ class _CadastroState extends State<Cadastro> {
           message = e.response?.data['message'];
         }
       }
-      print('ERRO $e');
-      setState(
-        () {
-          _mensagemErro = message;
-        },
-      );
+      //print('ERRO $e');
+      setState(() {
+        _mensagemErro = message;
+      });
     }
   }
 
