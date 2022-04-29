@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:quanto/dio_config.dart';
 import 'package:quanto/util/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'aplicacao.dart';
 
 class Cadastro extends StatefulWidget {
@@ -51,50 +53,49 @@ class _CadastroState extends State<Cadastro> {
   }
 
   void getHttp() async {
+    print("testenado");
+    final prefs = await SharedPreferences.getInstance();
     try {
-      var response = await Dio().post(
-        "${Constants.baseUrl}/mobile/registercustom",
-        data: {
-          'name': _controllerNome.text,
-          'email': _controllerEmail.text,
-          'password': _controllerSenha.text,
-          'password_confirmation': _controllerConfirmarSenha.text,
-        },
-        options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status! < 500;
-          },
-        ),
-      );
-      // ignore: avoid_print
-      print("RESPONSE");
-      // ignore: avoid_print
-      print(response.data['success']);
-      if (response.data['success'] == false) {
-        setState(
-          () {
-            _mensagemErro = response.data['error'];
-          },
-        );
-      }
-      if (response.data['success'] == true) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Aplicacao(),
-          ),
-        );
-      }
-    } catch (e) {
-      setState(() {
-        _mensagemErro =
-            "Aconteceu algum erro com o servidor! Tente novamente mais tarde.";
+      FormData data = FormData.fromMap({
+        'name': _controllerNome.text,
+        'email': _controllerEmail.text,
+        'password': _controllerSenha.text,
+        'password_confirmation': _controllerConfirmarSenha.text,
       });
-      // ignore: avoid_print
-      print('ERRROOOOOOO');
-      // ignore: avoid_print
-      print(e);
+
+      Response res =
+          await dioInstance().post("/auth/registercustom", data: data);
+
+      print('Ok ${res.data}');
+      if (res.data['status'] == 'success') {
+        // await prefs.setString('email', _controllerEmail.text);
+        // await prefs.setString('nome', res.data['user']['name']);
+        // await prefs.setInt('id', res.data['user']['id']);
+        // await prefs.setInt('level', res.data['user']['level']);
+        // Navigator.pushReplacementNamed(context, "/tela_principal");
+      }
+
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const Aplicacao(),
+      //   ),
+      // );
+
+    } catch (e) {
+      String message =
+          "Aconteceu algum erro com o servidor! Tente novamente mais tarde.";
+      if (e is DioError) {
+        if (e.response?.data['message'] != null) {
+          message = e.response?.data['message'];
+        }
+      }
+      print('ERRO $e');
+      setState(
+        () {
+          _mensagemErro = message;
+        },
+      );
     }
   }
 
