@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../dio_config.dart';
-// import 'package:quanto/pages/TelaResposta.dart';
 
 class MarcarPage extends StatefulWidget {
   const MarcarPage({Key? key}) : super(key: key);
@@ -42,23 +41,6 @@ class _MarcarPageState extends State<MarcarPage> {
         return;
       }
 
-      //Verifica se o campo esta vazio
-      // _controllerkmAtual.text == ''
-      //     ? _controllerkmAtual.text = '0'
-      //     : _controllerkmAtual.text;
-
-      // _controllerValorLitro.text == ''
-      //     ? _controllerValorLitro.text = '0'
-      //     : _controllerValorLitro.text;
-
-      // _controllerValorReais.text == ''
-      //     ? _controllerValorReais.text = '0'
-      //     : _controllerValorReais.text;
-
-      // _controllerQtdLitrosAbastecido.text == ''
-      //     ? _controllerQtdLitrosAbastecido.text = '0'
-      //     : _controllerQtdLitrosAbastecido.text;
-
       if (_controllerkmAtual.text.toString().contains(",") ||
           _controllerValorLitro.text.contains(",") ||
           _controllerValorReais.text.contains(",") ||
@@ -70,14 +52,6 @@ class _MarcarPageState extends State<MarcarPage> {
         return;
       }
 
-      // double kmAtual = double.parse(_controllerkmAtual.text);
-      // double valorLitro = double.parse(_controllerValorLitro.text);
-      // double valorReais = double.parse(_controllerValorReais.text);
-      // double qtdLitrodAbastecido =
-      //     double.parse(_controllerQtdLitrosAbastecido.text);
-      // String posto = _controllerPosto.text;
-      // String tipoCombustivel = dropdownValue;
-
       FormData data = FormData.fromMap({
         'km_atual': _controllerkmAtual.text,
         'valor_litro': _controllerValorLitro.text,
@@ -88,27 +62,6 @@ class _MarcarPageState extends State<MarcarPage> {
         'email_user': _email,
         'id_user': _id,
       });
-
-      //       FormData data = FormData.fromMap({
-      //   'km_atual': kmAtual,
-      //   'valor_litro': valorLitro,
-      //   'valor_reais': valorReais,
-      //   'qtd_litro_abastecido': qtdLitrodAbastecido,
-      //   'posto': posto,
-      //   'tipo_combustivel': tipoCombustivel,
-      //   'email_user': _email,
-      //   'id_user': _id,
-      // });
-
-      print('teste 1->');
-      // print(kmAtual);
-      // print(valorLitro);
-      // print(valorReais);
-      // print(qtdLitrodAbastecido);
-      // print(posto);
-      // print(tipoCombustivel);
-      // print(_email);
-      // print(_id);
 
       Response res = await dioInstance()
           .post("/quanto_rendes/registrar_abastecimento", data: data);
@@ -317,7 +270,7 @@ class _MarcarPageState extends State<MarcarPage> {
                           textColor: Colors.white,
                           padding: const EdgeInsets.all(15),
                           child: const Text(
-                            "Limpar dados",
+                            "Limpar info",
                             style: TextStyle(fontSize: 20),
                           ),
                           onPressed: () => _limpar(),
