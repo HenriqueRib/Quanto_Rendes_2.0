@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:quanto/dio_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +14,8 @@ class VisualizarPage extends StatefulWidget {
 }
 
 class _VisualizarPageState extends State<VisualizarPage> {
+  get onPressed => null;
+
   @override
   void initState() {
     getAbastecimento();
@@ -51,44 +55,91 @@ class _VisualizarPageState extends State<VisualizarPage> {
     }
   }
 
+  void deletarInfo(BuildContext context, id) {
+    print("Id -> $id,");
+  }
+
+  void _editarInfo(BuildContext context) {
+    print(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.teal[900],
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Center(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              child: SizedBox(
-                height: 200.0,
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(50),
-                  itemCount: _itens.length,
-                  itemBuilder: (context, indice) {
-                    Map<String, dynamic> item = _itens[indice];
-                    double _valorLitro = item["valor_litro"];
-                    // double _kmAtual = item["km_atual"];
-                    int _valorReais = item["valor_reais"];
-                    double _qtdLitro = item["qtd_litro_abastecido"] == null
-                        ? 2
-                        : item["qtd_litro_abastecido"];
-                    String _tipoCombustivel = item["tipo_combustivel"];
-                    String _data = item["data"];
+        height: MediaQuery.of(context).size.height * 1,
+        width: double.infinity,
+        padding: const EdgeInsets.only(top: 20),
+        child: ListView.builder(
+          padding: const EdgeInsets.only(top: 60),
+          itemCount: _itens.length,
+          itemBuilder: (context, indice) {
+            Map<String, dynamic> item = _itens[indice];
+            double _valorLitro = item["valor_litro"];
+            int _id = item["id"];
+            int _kmAtual = item["km_atual"];
+            double _valorReais = item["valor_reais"].toDouble();
+            double _qtdLitro = item["qtd_litro_abastecido"].toDouble();
+            String _tipoCombustivel = item["tipo_combustivel"];
+            String _data = item["data"];
+            DateTime dt = DateTime.parse(_data);
+            _data = DateFormat("d/MM/yyyy HH:mm:ss").format(dt);
 
-                    print("item AQUIIIIII ${item}");
-                    return ListTile(
-                      title: Text("Valor do litro $_valorLitro"),
-                      // subtitle: Text(_itens[indice]),
-                    );
-                  },
+            print("item AQUIIIIII $item");
+            return Slidable(
+              key: const ValueKey(0),
+              startActionPane: ActionPane(
+                motion: const ScrollMotion(),
+                // dismissible: DismissiblePane(onDismissed: () {
+                //   deletarInfo;
+                // }),
+                children: [
+                  SlidableAction(
+                    onPressed: (BuildContext context) {
+                      print("Id -> $_id");
+                    },
+                    backgroundColor: const Color(0xFFFE4A49),
+                    foregroundColor: Colors.white,
+                    icon: Icons.delete,
+                    label: 'Delete',
+                  ),
+                ],
+              ),
+              endActionPane: ActionPane(
+                motion: const ScrollMotion(),
+                children: [
+                  SlidableAction(
+                    onPressed: (BuildContext context) {
+                      print("Id -> $_id");
+                    },
+                    backgroundColor: const Color(0xFF0392CF),
+                    foregroundColor: Colors.white,
+                    icon: Icons.edit,
+                    label: 'Editar',
+                  ),
+                ],
+              ),
+              child: ListTile(
+                title: Text(
+                  "KM: $_kmAtual, Qtd litro:  $_qtdLitro, Valor: $_valorReais \nKM rodados:",
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                subtitle: Text(
+                  "Combustível: $_tipoCombustivel litro a $_valorLitro em $_data",
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
   }
 }
+
+void doNothing(BuildContext context) {}
