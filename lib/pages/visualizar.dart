@@ -18,7 +18,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
     super.initState();
   }
 
-  late List _itens = ["A", "B"];
+  late List _itens = [];
 
   void getAbastecimento() async {
     final prefs = await SharedPreferences.getInstance();
@@ -29,8 +29,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
       FormData data = FormData.fromMap({'email': _email, 'id': _id});
       Response res =
           await dioInstance().post("/quanto_rendes/visualizar", data: data);
-
-      print('Ok ${res.data}');
 
       setState(() {
         _itens = res.data['abastecimento'];
@@ -61,7 +59,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
         padding: const EdgeInsets.all(20),
         child: Center(
           child: SingleChildScrollView(
-            child: Expanded(
+            child: Center(
               // crossAxisAlignment: CrossAxisAlignment.stretch,
               child: SizedBox(
                 height: 200.0,
@@ -69,10 +67,19 @@ class _VisualizarPageState extends State<VisualizarPage> {
                   padding: const EdgeInsets.all(50),
                   itemCount: _itens.length,
                   itemBuilder: (context, indice) {
-                    // Map<String, dynamic> item = _itens[indice];
-                    // print("item ${ _itens[indice]["titulo"] }");
+                    Map<String, dynamic> item = _itens[indice];
+                    double _valorLitro = item["valor_litro"];
+                    // double _kmAtual = item["km_atual"];
+                    int _valorReais = item["valor_reais"];
+                    double _qtdLitro = item["qtd_litro_abastecido"] == null
+                        ? 2
+                        : item["qtd_litro_abastecido"];
+                    String _tipoCombustivel = item["tipo_combustivel"];
+                    String _data = item["data"];
+
+                    print("item AQUIIIIII ${item}");
                     return ListTile(
-                      title: Text(_itens[indice]),
+                      title: Text("Valor do litro $_valorLitro"),
                       // subtitle: Text(_itens[indice]),
                     );
                   },

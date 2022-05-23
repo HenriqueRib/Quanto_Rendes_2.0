@@ -71,6 +71,7 @@ class _CadastroState extends State<Cadastro> {
       String message =
           "Aconteceu algum erro com o servidor! Tente novamente mais tarde.";
       if (e is DioError) {
+        print(e.response);
         if (e.response?.data['message'] != null) {
           message = e.response?.data['message'];
         }
