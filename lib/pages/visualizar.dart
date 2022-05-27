@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, deprecated_member_use
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -57,10 +57,62 @@ class _VisualizarPageState extends State<VisualizarPage> {
 
   void deletarInfo(BuildContext context, id) {
     print("Id -> $id,");
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Deseja mesmo deletar essa informação?"),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text("Cancelar"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: const Text("Deletar"),
+              onPressed: () {
+                //salvar
+                print("DELETA NOW");
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
-  void _editarInfo(BuildContext context) {
+  void _editarInfo(BuildContext context, id) {
     print(2);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Adicionar Tarefa"),
+          content: TextField(
+            decoration: const InputDecoration(
+              labelText: "Deseja mesmo deletar essa informação?",
+            ),
+            onChanged: (text) {},
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text("Cancelar"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            FlatButton(
+              child: const Text("Deletar"),
+              onPressed: () {
+                //salvar
+                print("DELETA NOW");
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -92,12 +144,13 @@ class _VisualizarPageState extends State<VisualizarPage> {
               startActionPane: ActionPane(
                 motion: const ScrollMotion(),
                 // dismissible: DismissiblePane(onDismissed: () {
-                //   deletarInfo;
+                //   deletarInfo(context, _id);
                 // }),
                 children: [
                   SlidableAction(
                     onPressed: (BuildContext context) {
                       print("Id -> $_id");
+                      deletarInfo(context, _id);
                     },
                     backgroundColor: const Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
