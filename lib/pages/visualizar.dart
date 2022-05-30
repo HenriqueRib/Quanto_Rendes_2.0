@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, deprecated_member_use
+// ignore_for_file: avoid_print, deprecated_member_use, unused_label
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -35,19 +35,14 @@ class _VisualizarPageState extends State<VisualizarPage> {
           await dioInstance().post("/quanto_rendes/visualizar", data: data);
 
       setState(() {
+        _itens = [];
         _itens = res.data['abastecimento'];
       });
-
-      if (res.data['status'] == 'success') {
-        // await prefs.setString('email', _controllerEmail.text);
-        // Navigator.pushReplacementNamed(context, "/tela_principal");
-
-      }
     } catch (e) {
       // String message = "Erro! Tente novamente mais tarde.";
       if (e is DioError) {
         if (e.response?.data['message'] != null) {
-          print('Ok ${e.response}');
+          print('Erro em carregar registros de abastecimento -> ${e.response}');
           // message = e.response?.data['message'];
         }
       }
@@ -55,8 +50,29 @@ class _VisualizarPageState extends State<VisualizarPage> {
     }
   }
 
+  void deleteRegistro(id) async {
+    try {
+      FormData data = FormData.fromMap({
+        'id': id,
+      });
+
+      Response res = await dioInstance()
+          .post("/quanto_rendes/delete_registro", data: data);
+      if (res.data['status'] == 'success') {
+        print(res.data);
+        getAbastecimento();
+        // TODO: FLUSHBAR para notificar que foi deletado com sucesso
+        // Navigator.pushReplacementNamed(context, "/visualizar");
+      }
+    } catch (e) {
+      if (e is DioError) {
+        print(e.response);
+      }
+      print('ERRO $e');
+    }
+  }
+
   void deletarInfo(BuildContext context, id) {
-    print("Id -> $id,");
     showDialog(
       context: context,
       builder: (context) {
@@ -64,6 +80,8 @@ class _VisualizarPageState extends State<VisualizarPage> {
           title: const Text("Deseja mesmo deletar essa informação?"),
           actions: <Widget>[
             FlatButton(
+              color: Colors.red,
+              textColor: Colors.white,
               child: const Text("Cancelar"),
               onPressed: () {
                 Navigator.pop(context);
@@ -71,9 +89,10 @@ class _VisualizarPageState extends State<VisualizarPage> {
             ),
             FlatButton(
               child: const Text("Deletar"),
+              color: Colors.green,
+              textColor: Colors.white,
               onPressed: () {
-                //salvar
-                print("DELETA NOW");
+                deleteRegistro(id);
                 Navigator.pop(context);
               },
             )
@@ -83,29 +102,40 @@ class _VisualizarPageState extends State<VisualizarPage> {
     );
   }
 
-  void _editarInfo(BuildContext context, id) {
-    print(2);
+  void _editarInfo(BuildContext context, registro) {
+    print('Registro -> $registro');
+    // TODO: Adicionar mais de um campo para poder editar as informaçoes.
+    // double _valorLitro = registro["valor_litro"];
+    // int _id = registro["id"];
+    // int _kmAtual = registro["km_atual"];
+    // double _valorReais = registro["valor_reais"].toDouble();
+    // double _qtdLitro = registro["qtd_litro_abastecido"].toDouble();
+    // String _tipoCombustivel = registro["tipo_combustivel"];
+
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Adicionar Tarefa"),
+          title: const Text("Editar registro de abastecimento"),
           content: TextField(
             decoration: const InputDecoration(
-              labelText: "Deseja mesmo deletar essa informação?",
+              labelText: "KM Atual",
             ),
             onChanged: (text) {},
           ),
           actions: <Widget>[
             FlatButton(
+              color: Colors.red,
+              textColor: Colors.white,
               child: const Text("Cancelar"),
               onPressed: () => Navigator.pop(context),
             ),
             FlatButton(
-              child: const Text("Deletar"),
+              child: const Text("Editar"),
+              color: Colors.green,
+              textColor: Colors.white,
               onPressed: () {
-                //salvar
-                print("DELETA NOW");
+                print("EDITAR NOW");
                 Navigator.pop(context);
               },
             )
@@ -138,7 +168,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
             DateTime dt = DateTime.parse(_data);
             _data = DateFormat("d/MM/yyyy HH:mm:ss").format(dt);
 
-            print("item AQUIIIIII $item");
             return Slidable(
               key: const ValueKey(0),
               startActionPane: ActionPane(
@@ -149,7 +178,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
                 children: [
                   SlidableAction(
                     onPressed: (BuildContext context) {
-                      print("Id -> $_id");
                       deletarInfo(context, _id);
                     },
                     backgroundColor: const Color(0xFFFE4A49),
@@ -164,7 +192,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
                 children: [
                   SlidableAction(
                     onPressed: (BuildContext context) {
-                      print("Id -> $_id");
+                      _editarInfo(context, _itens[indice]);
                     },
                     backgroundColor: const Color(0xFF0392CF),
                     foregroundColor: Colors.white,

@@ -69,7 +69,6 @@ class _MarcarPageState extends State<MarcarPage> {
       if (res.data['status'] == 'success') {
         // await prefs.setString('email', _controllerEmail.text);
         // Navigator.pushReplacementNamed(context, "/tela_principal");
-
         _limpar();
         setState(() {
           _textoResultado = "Informações Salva com Sucesso";
