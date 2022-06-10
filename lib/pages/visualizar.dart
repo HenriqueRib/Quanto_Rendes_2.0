@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:quanto/dio_config.dart';
+import 'package:quanto/util/snac_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VisualizarPage extends StatefulWidget {
@@ -61,8 +62,10 @@ class _VisualizarPageState extends State<VisualizarPage> {
       if (res.data['status'] == 'success') {
         print(res.data);
         getAbastecimento();
-        // TODO: FLUSHBAR para notificar que foi deletado com sucesso
-        // Navigator.pushReplacementNamed(context, "/visualizar");
+        SnacCustom.success(
+          title: "Legal",
+          message: "Sua informações foi deletada com Sucesso",
+        );
       }
     } catch (e) {
       if (e is DioError) {
@@ -116,27 +119,23 @@ class _VisualizarPageState extends State<VisualizarPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Editar registro de abastecimento"),
-          content: TextField(
-            decoration: const InputDecoration(
-              labelText: "KM Atual",
-            ),
-            onChanged: (text) {},
-          ),
+          title:
+              const Text("Você deseja Editar este registro de abastecimento"),
           actions: <Widget>[
             FlatButton(
               color: Colors.red,
               textColor: Colors.white,
-              child: const Text("Cancelar"),
+              child: const Text("Não"),
               onPressed: () => Navigator.pop(context),
             ),
             FlatButton(
-              child: const Text("Editar"),
+              child: const Text("Sim"),
               color: Colors.green,
               textColor: Colors.white,
               onPressed: () {
                 print("EDITAR NOW");
                 Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, "/editar");
               },
             )
           ],

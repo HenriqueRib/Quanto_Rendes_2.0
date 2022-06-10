@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, avoid_print
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:quanto/util/snac_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../dio_config.dart';
 
@@ -65,7 +66,6 @@ class _MarcarPageState extends State<MarcarPage> {
 
       Response res = await dioInstance()
           .post("/quanto_rendes/registrar_abastecimento", data: data);
-      print('Ok ${res.data}');
       if (res.data['status'] == 'success') {
         // await prefs.setString('email', _controllerEmail.text);
         // Navigator.pushReplacementNamed(context, "/tela_principal");
@@ -73,6 +73,9 @@ class _MarcarPageState extends State<MarcarPage> {
         setState(() {
           _textoResultado = "Informações Salva com Sucesso";
         });
+        SnacCustom.success(
+            title: "Legal",
+            message: "Suas informações foram salvas com Sucesso");
       }
     } catch (e) {
       String message = "Erro! Tente novamente mais tarde.";

@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:quanto/menu/configuracao.dart';
+import 'package:quanto/menu/editar.dart';
 import 'package:quanto/menu/guillotine.dart';
 import 'package:quanto/menu/marcar.dart';
 import 'package:quanto/menu/perfil.dart';
@@ -50,16 +52,27 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.cyan,
         ),
         builder: (context, widget) {
-          return MediaQuery(
-            //Setting font does not change with system font size
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: widget!,
+          return Overlay(
+            initialEntries: [
+              OverlayEntry(
+                builder: (context) {
+                  return ToastProvider(
+                    child: MediaQuery(
+                      data:
+                          MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                      child: widget!,
+                    ),
+                  );
+                },
+              ),
+            ],
           );
         },
         debugShowCheckedModeBanner: false,
         home: const Login(),
         routes: {
           '/tela_principal': (context) => const Guillotine(),
+          '/editar': (context) => const Editar(),
           '/menu': (context) => const Menu(),
           '/login': (context) => const Login(),
           '/perfil': (context) => const Perfil(),
