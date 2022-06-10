@@ -105,8 +105,9 @@ class _VisualizarPageState extends State<VisualizarPage> {
     );
   }
 
-  void _editarInfo(BuildContext context, registro) {
+  void _editarInfo(BuildContext context, registro) async {
     print('Registro -> $registro');
+    print(registro['id']);
     // TODO: Adicionar mais de um campo para poder editar as informaçoes.
     // double _valorLitro = registro["valor_litro"];
     // int _id = registro["id"];
@@ -114,6 +115,8 @@ class _VisualizarPageState extends State<VisualizarPage> {
     // double _valorReais = registro["valor_reais"].toDouble();
     // double _qtdLitro = registro["qtd_litro_abastecido"].toDouble();
     // String _tipoCombustivel = registro["tipo_combustivel"];
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('id_editar', registro['id']);
 
     showDialog(
       context: context,
@@ -157,7 +160,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
           itemCount: _itens.length,
           itemBuilder: (context, indice) {
             Map<String, dynamic> item = _itens[indice];
-            double _valorLitro = item["valor_litro"];
+            double _valorLitro = item["valor_litro"].toDouble();
             int _id = item["id"];
             int _kmAtual = item["km_atual"];
             double _valorReais = item["valor_reais"].toDouble();

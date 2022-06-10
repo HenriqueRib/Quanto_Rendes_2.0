@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quanto/pages/menu.dart';
+import 'package:quanto/pages/page_editar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'guillotine_menu.dart';
 
@@ -29,10 +29,9 @@ class _EditarState extends State<Editar> {
       bottom: false,
       child: Stack(
         alignment: Alignment.topLeft,
-        // ignore: prefer_const_literals_to_create_immutables
-        children: <Widget>[
-          const Menu(),
-          const GuillotineMenu(),
+        children: const <Widget>[
+          PageEditar(),
+          GuillotineMenu(),
         ],
       ),
     );
