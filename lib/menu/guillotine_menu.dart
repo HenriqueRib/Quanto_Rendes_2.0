@@ -21,6 +21,12 @@ class _GuillotineMenuState extends State<GuillotineMenu>
   String _menu_title = 'Ola';
   final List<Map> _menus = <Map>[
     {
+      "icon": Icons.home,
+      "title": "Home",
+      "color": Colors.teal,
+      'route': "/tela_principal"
+    },
+    {
       "icon": Icons.view_agenda,
       "title": "Visualizar",
       "color": Colors.teal,

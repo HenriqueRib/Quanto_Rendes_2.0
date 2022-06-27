@@ -1,6 +1,8 @@
 // ignore_for_file: unused_local_variable, deprecated_member_use
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:quanto/dio_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PageEditar extends StatefulWidget {
@@ -22,7 +24,7 @@ class _PageEditarState extends State<PageEditar> {
     final int? _idEditar = prefs.getInt('id_editar'); // Recuperar
   }
 
-  TextEditingController _controllerkmAtual = TextEditingController();
+  final TextEditingController _controllerkmAtual = TextEditingController();
   final TextEditingController _controllerValorLitro = TextEditingController();
   final TextEditingController _controllerValorReais = TextEditingController();
   final TextEditingController _controllerQtdLitrosAbastecido =
@@ -35,6 +37,42 @@ class _PageEditarState extends State<PageEditar> {
   final FocusNode _focusPosto = FocusNode();
   String dropdownValue = 'Etanol';
   String _textoResultado = "Edite seu abastecimento";
+
+  _atualizaDados() async {
+    //TODO: Trazer a informacao com base no id da informacao do abastecimento
+
+    final prefs = await SharedPreferences.getInstance();
+
+    try {
+      final String? _email = prefs.getString('email'); // Recuperar
+      final int? _id = prefs.getInt('id'); // Recuperar
+      FormData data = FormData.fromMap({'email': _email, 'id': _id});
+      Response res = await dioInstance()
+          .post("/quanto_rendes/registro_abastecimento_show", data: data);
+
+      setState(() {
+        _textoResultado = "Edite seu abastecimento";
+        _controllerkmAtual.text = '152';
+        _controllerValorLitro.text = '152';
+        _controllerValorReais.text = '152';
+        _controllerQtdLitrosAbastecido.text = '152';
+        _controllerPosto.text = '152';
+      });
+      return const Padding(
+          padding: EdgeInsets.only(
+        bottom: 0,
+      ));
+    } catch (e) {
+      // String message = "Erro! Tente novamente mais tarde.";
+      if (e is DioError) {
+        if (e.response?.data['message'] != null) {
+          print('Erro em carregar registros de abastecimento -> ${e.response}');
+          // message = e.response?.data['message'];
+        }
+      }
+      print('ERRO $e');
+    }
+  }
 
   _limpar() {
     setState(() {
@@ -67,6 +105,7 @@ class _PageEditarState extends State<PageEditar> {
               child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  _atualizaDados(),
                   Padding(
                     padding: const EdgeInsets.only(
                       bottom: 0,
@@ -240,6 +279,7 @@ class _PageEditarState extends State<PageEditar> {
                           ),
                           //onPressed: _salvarAbastecimento
                           onPressed: () {
+                            //TODO: Salvar a edicao dos novos dados do
                             // _salvarAbastecimento();
                             // Navigator.push(
                             //   context,

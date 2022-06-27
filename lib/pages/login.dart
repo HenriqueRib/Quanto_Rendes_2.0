@@ -87,6 +87,7 @@ class _LoginState extends State<Login> {
     if (_email != null) {
       //TODO: Melhorar isso por fazer uma requisição e ver se tem tokem valido
       //Direciona para a tela principal se tiver informação de e-mail
+      //Melhor. Ao fazer o logof no aparelho apagar o e-mail.
       Navigator.pushReplacementNamed(context, "/tela_principal");
     }
   }
