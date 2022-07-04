@@ -48,6 +48,64 @@ class _PerfilPageState extends State<PerfilPage> {
                     )
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RawMaterialButton(
+                      padding: EdgeInsets.all(10),
+                      onPressed: () async {
+                        //_registerStore.setPhotoCameraRosto();
+                        Navigator.pop(context);
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.camera,
+                            color: Colors.amberAccent,
+                            size: 50,
+                          ),
+                          Text(
+                            'Câmera',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Calibri',
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    RawMaterialButton(
+                      padding: EdgeInsets.all(10),
+                      onPressed: () async {
+                        //_registerStore.setPhotoGaleriaRosto();
+                        Navigator.pop(context);
+                      },
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.image_outlined,
+                            color: Colors.black54,
+                            size: 50,
+                          ),
+                          Text(
+                            'Galeria',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Calibri',
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: TextField(

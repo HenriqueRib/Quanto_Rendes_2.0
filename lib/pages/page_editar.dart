@@ -17,11 +17,52 @@ class _PageEditarState extends State<PageEditar> {
   void initState() {
     getIdEditar();
     super.initState();
+    _atualizaDados();
   }
 
   getIdEditar() async {
     final prefs = await SharedPreferences.getInstance();
     final int? _idEditar = prefs.getInt('id_editar'); // Recuperar
+  }
+
+  _atualizaDados() async {
+    //TODO: Trazer a informacao com base no id da informacao do abastecimento
+    final prefs = await SharedPreferences.getInstance();
+
+    try {
+      final String? _email = prefs.getString('email'); // Recuperar
+      final int? _id = prefs.getInt('id'); // Recuperar
+
+      FormData data = FormData.fromMap({'email': _email, 'id': _id});
+      Response res = await dioInstance()
+          .post("/quanto_rendes/registro_abastecimento_show", data: data);
+
+      print(res.data['abastecimento']['qtd_litro_abstecido']);
+
+//tratamento antes de atualizar
+      String _qtd = res.data['abastecimento']['qtd_litro_abstecido'] ?? '';
+      String _posto = res.data['abastecimento']['posto'] ?? '';
+
+      setState(() {
+        _controllerkmAtual.text =
+            res.data['abastecimento']['km_atual'].toString();
+        _controllerValorLitro.text =
+            res.data['abastecimento']['valor_litro'].toString();
+        _controllerValorReais.text =
+            res.data['abastecimento']['valor_reais'].toString();
+        _controllerQtdLitrosAbastecido.text = _qtd;
+        _controllerPosto.text = _posto;
+      });
+    } catch (e) {
+      // String message = "Erro! Tente novamente mais tarde.";
+      if (e is DioError) {
+        if (e.response?.data['message'] != null) {
+          print('Erro em carregar registros de abastecimento -> ${e.response}');
+          // message = e.response?.data['message'];
+        }
+      }
+      print('ERRO $e');
+    }
   }
 
   final TextEditingController _controllerkmAtual = TextEditingController();
@@ -37,42 +78,6 @@ class _PageEditarState extends State<PageEditar> {
   final FocusNode _focusPosto = FocusNode();
   String dropdownValue = 'Etanol';
   String _textoResultado = "Edite seu abastecimento";
-
-  _atualizaDados() async {
-    //TODO: Trazer a informacao com base no id da informacao do abastecimento
-
-    final prefs = await SharedPreferences.getInstance();
-
-    try {
-      final String? _email = prefs.getString('email'); // Recuperar
-      final int? _id = prefs.getInt('id'); // Recuperar
-      FormData data = FormData.fromMap({'email': _email, 'id': _id});
-      Response res = await dioInstance()
-          .post("/quanto_rendes/registro_abastecimento_show", data: data);
-
-      setState(() {
-        _textoResultado = "Edite seu abastecimento";
-        _controllerkmAtual.text = '152';
-        _controllerValorLitro.text = '152';
-        _controllerValorReais.text = '152';
-        _controllerQtdLitrosAbastecido.text = '152';
-        _controllerPosto.text = '152';
-      });
-      return const Padding(
-          padding: EdgeInsets.only(
-        bottom: 0,
-      ));
-    } catch (e) {
-      // String message = "Erro! Tente novamente mais tarde.";
-      if (e is DioError) {
-        if (e.response?.data['message'] != null) {
-          print('Erro em carregar registros de abastecimento -> ${e.response}');
-          // message = e.response?.data['message'];
-        }
-      }
-      print('ERRO $e');
-    }
-  }
 
   _limpar() {
     setState(() {
@@ -105,7 +110,6 @@ class _PageEditarState extends State<PageEditar> {
               child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  _atualizaDados(),
                   Padding(
                     padding: const EdgeInsets.only(
                       bottom: 0,
@@ -206,45 +210,7 @@ class _PageEditarState extends State<PageEditar> {
                     ),
                     controller: _controllerPosto,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                      left: 5,
-                      right: 5,
-                      bottom: 10,
-                    ),
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      value: dropdownValue,
-                      icon: const Icon(
-                        Icons.arrow_downward,
-                        color: Colors.white,
-                      ),
-                      elevation: 16,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.teal,
-                      ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValue = newValue!;
-                        });
-                      },
-                      items: <String>['Etanol', 'Gasolina']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                  //TODO: Centralizar esses botoesx
                   Row(
                     children: <Widget>[
                       Padding(
