@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable, deprecated_member_use
 
 import 'package:dio/dio.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:quanto/dio_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,10 +67,12 @@ class _PageEditarState extends State<PageEditar> {
   }
 
   final TextEditingController _controllerkmAtual = TextEditingController();
-  final TextEditingController _controllerValorLitro = TextEditingController();
-  final TextEditingController _controllerValorReais = TextEditingController();
+  final TextEditingController _controllerValorLitro =
+      MaskedTextController(mask: '00.00');
+  final TextEditingController _controllerValorReais =
+      MaskedTextController(mask: '000.00');
   final TextEditingController _controllerQtdLitrosAbastecido =
-      TextEditingController();
+      MaskedTextController(mask: '00.00');
   final TextEditingController _controllerPosto = TextEditingController();
   final FocusNode _focusKmAtual = FocusNode();
   final FocusNode _focusValorLitro = FocusNode();

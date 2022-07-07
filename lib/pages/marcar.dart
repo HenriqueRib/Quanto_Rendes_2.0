@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quanto/util/snac_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../dio_config.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
 
 class MarcarPage extends StatefulWidget {
   const MarcarPage({Key? key}) : super(key: key);
@@ -14,10 +15,12 @@ class MarcarPage extends StatefulWidget {
 
 class _MarcarPageState extends State<MarcarPage> {
   final TextEditingController _controllerkmAtual = TextEditingController();
-  final TextEditingController _controllerValorLitro = TextEditingController();
-  final TextEditingController _controllerValorReais = TextEditingController();
+  final TextEditingController _controllerValorLitro =
+      MaskedTextController(mask: '00.00');
+  final TextEditingController _controllerValorReais =
+      MaskedTextController(mask: '000.00');
   final TextEditingController _controllerQtdLitrosAbastecido =
-      TextEditingController();
+      MaskedTextController(mask: '00.00');
   final TextEditingController _controllerPosto = TextEditingController();
   final FocusNode _focusKmAtual = FocusNode();
   final FocusNode _focusValorLitro = FocusNode();

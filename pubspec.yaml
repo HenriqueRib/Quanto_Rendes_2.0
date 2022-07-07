@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.17.0
   fl_toast: ^3.1.0
   image_picker: ^0.8.5+3
+  extended_masked_text: ^2.3.1
  
 
 dev_dependencies:
