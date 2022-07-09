@@ -67,7 +67,7 @@ class _TelaRespostaState extends State<TelaResposta> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 25),
-                child: Image.asset("images/carro-azul.png"),
+                child: Image.asset("assets/img/carro-azul.png"),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10, left: 15, right: 15),

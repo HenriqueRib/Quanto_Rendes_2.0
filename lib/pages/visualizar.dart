@@ -106,18 +106,8 @@ class _VisualizarPageState extends State<VisualizarPage> {
   }
 
   void _editarInfo(BuildContext context, registro) async {
-    print('Registro -> $registro');
-    print(registro['id']);
-    // TODO: Adicionar mais de um campo para poder editar as informaçoes.
-    // double _valorLitro = registro["valor_litro"];
-    // int _id = registro["id"];
-    // int _kmAtual = registro["km_atual"];
-    // double _valorReais = registro["valor_reais"].toDouble();
-    // double _qtdLitro = registro["qtd_litro_abastecido"].toDouble();
-    // String _tipoCombustivel = registro["tipo_combustivel"];
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('id_editar', registro['id']);
-
     showDialog(
       context: context,
       builder: (context) {
@@ -125,22 +115,27 @@ class _VisualizarPageState extends State<VisualizarPage> {
           title:
               const Text("Você deseja Editar este registro de abastecimento"),
           actions: <Widget>[
-            FlatButton(
-              color: Colors.red,
-              textColor: Colors.white,
-              child: const Text("Não"),
-              onPressed: () => Navigator.pop(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                FlatButton(
+                  color: Colors.red,
+                  textColor: Colors.white,
+                  child: const Text("Não"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                FlatButton(
+                  child: const Text("Sim"),
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, "/editar");
+                  },
+                )
+              ],
             ),
-            FlatButton(
-              child: const Text("Sim"),
-              color: Colors.green,
-              textColor: Colors.white,
-              onPressed: () {
-                print("EDITAR NOW");
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, "/editar");
-              },
-            )
           ],
         );
       },

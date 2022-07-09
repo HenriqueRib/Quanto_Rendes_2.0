@@ -101,7 +101,7 @@ class _CadastroState extends State<Cadastro> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 0),
                   child: Image.asset(
-                    "images/carro-azul.png",
+                    "assets/img/carro-azul.png",
                     width: 200,
                     height: 150,
                   ),

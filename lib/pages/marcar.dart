@@ -266,10 +266,11 @@ class _MarcarPageState extends State<MarcarPage> {
                     ),
                   ),
                   Row(
-                    children: <Widget>[
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, left: 15, right: 15),
+                        padding: const EdgeInsets.only(top: 20),
                         child: RaisedButton(
                           color: Colors.teal,
                           textColor: Colors.white,

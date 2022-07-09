@@ -80,7 +80,7 @@ class _AplicacaoState extends State<Aplicacao> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(bottom: 05),
-                  child: Image.asset("images/carro-azul.png"),
+                  child: Image.asset("assets/img/carro-azul.png"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
@@ -132,10 +132,11 @@ class _AplicacaoState extends State<Aplicacao> {
                   controller: _controllerQtdCombustivel,
                 ),
                 Row(
-                  children: <Widget>[
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 15, right: 15),
+                      padding: const EdgeInsets.only(top: 20),
                       child: RaisedButton(
                         color: Colors.teal,
                         textColor: Colors.white,
@@ -148,8 +149,7 @@ class _AplicacaoState extends State<Aplicacao> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 20, left: 15, right: 15),
+                      padding: const EdgeInsets.only(top: 20),
                       child: RaisedButton(
                         color: Colors.teal,
                         textColor: Colors.white,
