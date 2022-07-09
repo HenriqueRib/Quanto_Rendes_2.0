@@ -53,7 +53,7 @@ class _PerfilPageState extends State<PerfilPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RawMaterialButton(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       onPressed: () async {
                         //_registerStore.setPhotoCameraRosto();
                         Navigator.pop(context);

@@ -38,7 +38,7 @@ class SnacCustom {
       backgroundColor: Colors.transparent,
       margin: EdgeInsets.all(8.sp),
       contentPadding: const EdgeInsets.all(0),
-      alignment: const Alignment(0, 1),
+      alignment: const Alignment(0, 0), //posiçao
       child: Dismissible(
         key: ValueKey<String>('$key'),
         child: Container(

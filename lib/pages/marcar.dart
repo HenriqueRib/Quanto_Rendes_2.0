@@ -16,11 +16,11 @@ class MarcarPage extends StatefulWidget {
 class _MarcarPageState extends State<MarcarPage> {
   final TextEditingController _controllerkmAtual = TextEditingController();
   final TextEditingController _controllerValorLitro =
-      MaskedTextController(mask: '00.00');
+      MoneyMaskedTextController(decimalSeparator: '.');
   final TextEditingController _controllerValorReais =
-      MaskedTextController(mask: '000.00');
+      MoneyMaskedTextController(decimalSeparator: '.');
   final TextEditingController _controllerQtdLitrosAbastecido =
-      MaskedTextController(mask: '00.00');
+      MoneyMaskedTextController(decimalSeparator: '.');
   final TextEditingController _controllerPosto = TextEditingController();
   final FocusNode _focusKmAtual = FocusNode();
   final FocusNode _focusValorLitro = FocusNode();
@@ -70,15 +70,14 @@ class _MarcarPageState extends State<MarcarPage> {
       Response res = await dioInstance()
           .post("/quanto_rendes/registrar_abastecimento", data: data);
       if (res.data['status'] == 'success') {
-        // await prefs.setString('email', _controllerEmail.text);
-        // Navigator.pushReplacementNamed(context, "/tela_principal");
-        _limpar();
-        setState(() {
-          _textoResultado = "Informações Salva com Sucesso";
-        });
         SnacCustom.success(
             title: "Legal",
             message: "Suas informações foram salvas com Sucesso");
+        _limpar();
+        Navigator.pushReplacementNamed(context, "/tela_principal");
+        setState(() {
+          _textoResultado = "Informações Salva com Sucesso";
+        });
       }
     } catch (e) {
       String message = "Erro! Tente novamente mais tarde.";
@@ -124,7 +123,6 @@ class _MarcarPageState extends State<MarcarPage> {
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(
@@ -301,14 +299,6 @@ class _MarcarPageState extends State<MarcarPage> {
                           //onPressed: _salvarAbastecimento
                           onPressed: () {
                             _salvarAbastecimento();
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => TelaResposta(
-                            //       valor: _textoResultado,
-                            //     ),
-                            //   ),
-                            // );
                           },
                         ),
                       ),

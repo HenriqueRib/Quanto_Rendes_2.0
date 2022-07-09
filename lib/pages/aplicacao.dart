@@ -1,6 +1,11 @@
 // ignore_for_file: deprecated_member_use
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
+import 'package:quanto/menu/guillotine.dart';
+import 'package:quanto/menu/guillotine_menu.dart';
 import 'package:quanto/pages/TelaResposta.dart';
+import 'package:quanto/pages/home.dart';
+import 'package:quanto/pages/menu.dart';
 
 class Aplicacao extends StatefulWidget {
   const Aplicacao({Key? key}) : super(key: key);
@@ -13,7 +18,7 @@ class _AplicacaoState extends State<Aplicacao> {
   final TextEditingController _controllerkmFinal = TextEditingController();
   final TextEditingController _controllerkmInicial = TextEditingController();
   final TextEditingController _controllerQtdCombustivel =
-      TextEditingController();
+      MoneyMaskedTextController(decimalSeparator: '.');
   String _textoResultado = "Descubra quanto que seu carro está rendendo";
   final FocusNode _focusKmInicial = FocusNode();
   final FocusNode _focusKmFinal = FocusNode();
@@ -158,7 +163,6 @@ class _AplicacaoState extends State<Aplicacao> {
                           "Calcular",
                           style: TextStyle(fontSize: 20),
                         ),
-                        //onPressed: _calcularkm
                         onPressed: () {
                           _calcularkm();
                           _textoResultado == "Preencha os campos para calcular"
@@ -176,6 +180,26 @@ class _AplicacaoState extends State<Aplicacao> {
                       ),
                     ),
                   ],
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 35),
+                    child: RaisedButton(
+                      color: Colors.teal,
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(15),
+                      child: const Text(
+                        "Voltar Home",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Guillotine(),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

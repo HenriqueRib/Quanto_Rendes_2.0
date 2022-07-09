@@ -31,16 +31,16 @@ class _PageEditarState extends State<PageEditar> {
     final prefs = await SharedPreferences.getInstance();
 
     try {
-      final String? _email = prefs.getString('email'); // Recuperar
-      final int? _id = prefs.getInt('id'); // Recuperar
+      final String? _email = prefs.getString('email');
+      final int? _id = prefs.getInt('id_editar');
 
       FormData data = FormData.fromMap({'email': _email, 'id': _id});
       Response res = await dioInstance()
           .post("/quanto_rendes/registro_abastecimento_show", data: data);
 
-      print(res.data['abastecimento']['qtd_litro_abstecido']);
+      print(res.data['abastecimento']['valor_reais']);
 
-//tratamento antes de atualizar
+      //tratamento antes de atualizar
       String _qtd = res.data['abastecimento']['qtd_litro_abstecido'] ?? '';
       String _posto = res.data['abastecimento']['posto'] ?? '';
 
@@ -68,11 +68,11 @@ class _PageEditarState extends State<PageEditar> {
 
   final TextEditingController _controllerkmAtual = TextEditingController();
   final TextEditingController _controllerValorLitro =
-      MaskedTextController(mask: '00.00');
+      MoneyMaskedTextController(decimalSeparator: '.');
   final TextEditingController _controllerValorReais =
-      MaskedTextController(mask: '000.00');
+      MoneyMaskedTextController(decimalSeparator: '.');
   final TextEditingController _controllerQtdLitrosAbastecido =
-      MaskedTextController(mask: '00.00');
+      MoneyMaskedTextController(decimalSeparator: '.');
   final TextEditingController _controllerPosto = TextEditingController();
   final FocusNode _focusKmAtual = FocusNode();
   final FocusNode _focusValorLitro = FocusNode();

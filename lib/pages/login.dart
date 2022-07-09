@@ -252,13 +252,6 @@ class _LoginState extends State<Login> {
                         );
                       },
                     ),
-                    // child: GestureDetector(
-                    //   child: const Text("Pular etapa e apenas Calcular!",
-                    //       style: TextStyle(color: Colors.blue, fontSize: 25)),
-                    // onTap: () {
-                    //   Navigator.push(context,
-                    //       MaterialPageRoute(builder: (context) => Cadastro()));
-                    // },
                   ),
                 ],
               ),

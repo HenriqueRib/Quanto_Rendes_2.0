@@ -164,6 +164,10 @@ class _VisualizarPageState extends State<VisualizarPage> {
             String _data = item["data"];
             DateTime dt = DateTime.parse(_data);
             _data = DateFormat("d/MM/yyyy HH:mm:ss").format(dt);
+            print(item);
+            String _kmRodados = item["km_rodados"] == 0
+                ? 'Não Contabilizado'
+                : item["km_rodados"].toString();
 
             return Slidable(
               key: const ValueKey(0),
@@ -200,10 +204,8 @@ class _VisualizarPageState extends State<VisualizarPage> {
               ),
               child: ListTile(
                 title: Text(
-                  "KM: $_kmAtual, Qtd litro:  $_qtdLitro, Valor: $_valorReais \nKM rodados:",
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
+                  "KM: $_kmAtual, Qtd litro:  $_qtdLitro, Valor: $_valorReais \nKM rodados: $_kmRodados",
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 subtitle: Text(
                   "Combustível: $_tipoCombustivel litro a $_valorLitro em $_data",
