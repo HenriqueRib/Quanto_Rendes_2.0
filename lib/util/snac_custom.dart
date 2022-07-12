@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SnacCustom {
-  static success({
-    String? title,
-    String? message,
-  }) {
+  static success({String? title, String? message, int? duration}) {
     notificationBase(
       key: 'SnackbarSuccess',
       backgroundColor: Colors.green,

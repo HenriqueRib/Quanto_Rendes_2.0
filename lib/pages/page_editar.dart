@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:quanto/dio_config.dart';
+import 'package:quanto/menu/guillotine.dart';
+import 'package:quanto/util/snac_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PageEditar extends StatefulWidget {
@@ -14,58 +16,6 @@ class PageEditar extends StatefulWidget {
 }
 
 class _PageEditarState extends State<PageEditar> {
-  @override
-  void initState() {
-    getIdEditar();
-    super.initState();
-    _atualizaDados();
-  }
-
-  getIdEditar() async {
-    final prefs = await SharedPreferences.getInstance();
-    final int? _idEditar = prefs.getInt('id_editar');
-  }
-
-  _atualizaDados() async {
-    //TODO: Trazer a informacao com base no id da informacao do abastecimento
-    final prefs = await SharedPreferences.getInstance();
-
-    try {
-      final String? _email = prefs.getString('email');
-      final int? _id = prefs.getInt('id_editar');
-
-      FormData data = FormData.fromMap({'email': _email, 'id': _id});
-      Response res = await dioInstance()
-          .post("/quanto_rendes/registro_abastecimento_show", data: data);
-
-      print(res.data['abastecimento']['valor_reais']);
-
-      //tratamento antes de atualizar
-      String _qtd = res.data['abastecimento']['qtd_litro_abstecido'] ?? '';
-      String _posto = res.data['abastecimento']['posto'] ?? '';
-
-      setState(() {
-        _controllerkmAtual.text =
-            res.data['abastecimento']['km_atual'].toString();
-        _controllerValorLitro.text =
-            res.data['abastecimento']['valor_litro'].toString();
-        _controllerValorReais.text =
-            res.data['abastecimento']['valor_reais'].toString();
-        _controllerQtdLitrosAbastecido.text = _qtd;
-        _controllerPosto.text = _posto;
-      });
-    } catch (e) {
-      // String message = "Erro! Tente novamente mais tarde.";
-      if (e is DioError) {
-        if (e.response?.data['message'] != null) {
-          print('Erro em carregar registros de abastecimento -> ${e.response}');
-          // message = e.response?.data['message'];
-        }
-      }
-      print('ERRO $e');
-    }
-  }
-
   final TextEditingController _controllerkmAtual = TextEditingController();
   final TextEditingController _controllerValorLitro =
       MoneyMaskedTextController(decimalSeparator: '.');
@@ -81,6 +31,69 @@ class _PageEditarState extends State<PageEditar> {
   final FocusNode _focusPosto = FocusNode();
   String dropdownValue = 'Etanol';
   String _textoResultado = "Edite seu abastecimento";
+
+  @override
+  void initState() {
+    getIdEditar();
+    super.initState();
+    _recuperaDados();
+  }
+
+  getIdEditar() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? _idEditar = prefs.getInt('id_editar');
+  }
+
+  _recuperaDados() async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      final String? _email = prefs.getString('email');
+      final int? _id = prefs.getInt('id_editar');
+
+      FormData data = FormData.fromMap({'email': _email, 'id': _id});
+      Response res = await dioInstance()
+          .post("/quanto_rendes/registro_abastecimento_show", data: data);
+
+      //tratamento antes de atualizar
+      String _qtd = res.data['abastecimento']['qtd_litro_abstecido'] ?? '';
+      String _posto = res.data['abastecimento']['posto'] ?? '';
+      String _valor_litro = res.data['abastecimento']['valor_litro'].toString();
+      _valor_litro.contains('.')
+          ? _valor_litro
+          : _valor_litro = _valor_litro + '.00';
+      String _valor_reais = res.data['abastecimento']['valor_reais'].toString();
+      _valor_reais.contains('.')
+          ? _valor_reais
+          : _valor_reais = _valor_reais + '.00';
+
+      setState(() {
+        _controllerkmAtual.text =
+            res.data['abastecimento']['km_atual'].toString();
+        _controllerValorLitro.text = _valor_litro;
+        _controllerValorReais.text = _valor_reais;
+        _controllerQtdLitrosAbastecido.text = _qtd;
+        _controllerPosto.text = _posto;
+      });
+    } catch (e) {
+      if (e is DioError) {
+        if (e.response?.data['message'] != null) {
+          // print('Erro em carregar registros de abastecimento -> ${e.response}');
+        }
+      }
+      // print('ERRO $e');
+    }
+  }
+
+  _salvarAbastecimento() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final String? _email = prefs.getString('email');
+    final int? _id = prefs.getInt('id_editar');
+
+    FormData data = FormData.fromMap({'email': _email, 'id': _id});
+    Response res = await dioInstance()
+        .post("/quanto_rendes/registro_abastecimento_edit", data: data);
+  }
 
   _limpar() {
     setState(() {
@@ -111,7 +124,6 @@ class _PageEditarState extends State<PageEditar> {
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(
@@ -246,16 +258,14 @@ class _PageEditarState extends State<PageEditar> {
                               fontSize: 20,
                             ),
                           ),
-                          //onPressed: _salvarAbastecimento
                           onPressed: () {
                             //TODO: Salvar a edicao dos novos dados do
-                            // _salvarAbastecimento();
+
+                            _salvarAbastecimento();
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(
-                            //     builder: (context) => TelaResposta(
-                            //       valor: _textoResultado,
-                            //     ),
+                            //     builder: (context) => const Guillotine(),
                             //   ),
                             // );
                           },

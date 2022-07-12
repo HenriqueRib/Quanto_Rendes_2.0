@@ -2,10 +2,7 @@
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:quanto/menu/guillotine.dart';
-import 'package:quanto/menu/guillotine_menu.dart';
 import 'package:quanto/pages/TelaResposta.dart';
-import 'package:quanto/pages/home.dart';
-import 'package:quanto/pages/menu.dart';
 
 class Aplicacao extends StatefulWidget {
   const Aplicacao({Key? key}) : super(key: key);
