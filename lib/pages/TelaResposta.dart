@@ -21,10 +21,7 @@ class _TelaRespostaState extends State<TelaResposta> {
   void _salvarInfo() async {
     final prefs = await SharedPreferences.getInstance();
     final String? _email = prefs.getString('email');
-    // ignore: avoid_print
-    print("estou tentando");
-    // ignore: avoid_print
-    print(_email);
+
     try {
       var response = await Dio().post(
         "${Constants.baseUrl}/mobile/verifica",

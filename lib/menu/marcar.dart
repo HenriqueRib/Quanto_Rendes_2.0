@@ -13,11 +13,11 @@ class Marcar extends StatefulWidget {
 class _MarcarState extends State<Marcar> {
   @override
   void initState() {
-    getTitle();
+    _getTitle();
     super.initState();
   }
 
-  getTitle() async {
+  _getTitle() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('menu_title', 'Guardar informação');
   }

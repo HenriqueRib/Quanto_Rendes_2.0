@@ -14,6 +14,25 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  @override
+  void initState() {
+    _verificarUsuarioLogado();
+    super.initState();
+  }
+
+  // _logarUsuario(Usuario usuario) {}
+  Future _verificarUsuarioLogado() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? _email = prefs.getString('email');
+
+    if (_email != null) {
+      //TODO: Melhorar isso por fazer uma requisição e ver se tem tokem valido
+      //Direciona para a tela principal se tiver informação de e-mail
+      //Melhor. Ao fazer o logof no aparelho apagar o e-mail.
+      Navigator.pushReplacementNamed(context, "/tela_principal");
+    }
+  }
+
   final TextEditingController _controllerEmail =
       TextEditingController(text: "");
   final TextEditingController _controllerSenha =
@@ -78,31 +97,6 @@ class _LoginState extends State<Login> {
       );
     }
   }
-
-  // _logarUsuario(Usuario usuario) {}
-  Future _verificarUsuarioLogado() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? _email = prefs.getString('email');
-
-    if (_email != null) {
-      //TODO: Melhorar isso por fazer uma requisição e ver se tem tokem valido
-      //Direciona para a tela principal se tiver informação de e-mail
-      //Melhor. Ao fazer o logof no aparelho apagar o e-mail.
-      Navigator.pushReplacementNamed(context, "/tela_principal");
-    }
-  }
-
-  @override
-  void initState() {
-    _verificarUsuarioLogado();
-    super.initState();
-  }
-
-  // @override
-  // Future<void> initState() async {
-  //   _verificarUsuarioLogado();
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {

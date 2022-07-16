@@ -1,5 +1,10 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:quanto/dio_config.dart';
+import 'package:quanto/util/snac_custom.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({Key? key}) : super(key: key);
@@ -9,10 +14,84 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
+  @override
+  void initState() {
+    _getUser();
+    super.initState();
+  }
+
+  _getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      final String? _email = prefs.getString('email'); // Recuperar
+      FormData data = FormData.fromMap({
+        'email': _email,
+      });
+      Response res =
+          await dioInstance().post("/quanto_rendes/user", data: data);
+      print(res.data['data'][0]);
+
+      setState(() {
+        _controllerNome.text = res.data['data'][0]['name'];
+        _image = res.data['data'][0]['image'];
+      });
+    } catch (e) {
+      // print('ERRO $e');
+    }
+  }
+
+  _newPhotoCamera() async {
+    _photo = await picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = _photo!.path;
+    });
+  }
+
+  _newPhotoGaleria() async {
+    _photo = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = _photo!.path;
+    });
+  }
+
+  _atualizarDados() async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      final String? _email = prefs.getString('email');
+
+      FormData data = FormData.fromMap({
+        'email': _email,
+        'name': _controllerNome.text,
+        'image': await MultipartFile.fromFile(_photo!.path),
+      });
+      //TODO: Verificar porque nao esta salvando a imagem.
+
+      Response res = await dioInstance().post("/auth/update/user", data: data);
+
+      if (res.data['status'] == 'success') {
+        SnacCustom.success(
+            title: "Legal",
+            message:
+                "Suas informações de Perfil foram atualizadas com Sucesso");
+        Navigator.pushReplacementNamed(context, "/tela_principal");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   final bool _subindoImagem = false;
+  final TextEditingController _controllerNome = TextEditingController();
+  ImagePicker picker = ImagePicker();
+  String? _image;
+  XFile? _photo;
 
   @override
   Widget build(BuildContext context) {
+    if (_image is! String || _image == 'null') {
+      _image = 'assets/img/userdefault.png';
+    }
+
     return Scaffold(
       body: Container(
         color: Colors.teal[900],
@@ -26,27 +105,29 @@ class _PerfilPageState extends State<PerfilPage> {
                       ? const CircularProgressIndicator()
                       : Container(),
                 ),
-                // ignore: prefer_const_constructors
-                CircleAvatar(
-                  radius: 100,
-                  backgroundColor: Colors.grey,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    FlatButton(
-                      child: const Text("Câmera"),
-                      onPressed: () {
-                        // _recuperarImagem("camera");
-                      },
+                ClipOval(
+                  child: SizedBox.fromSize(
+                    size: const Size.fromRadius(120),
+                    child: Stack(
+                      children: [
+                        Image.asset(
+                          "$_image",
+                          width: 250,
+                          height: 250,
+                          fit: BoxFit.cover,
+                        ),
+                        Container(
+                          height: 1,
+                          width: 1,
+                          color: Colors.black54,
+                          child: const Icon(
+                            Icons.camera_alt_sharp,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
                     ),
-                    FlatButton(
-                      child: const Text("Galeria"),
-                      onPressed: () {
-                        // _recuperarImagem("galeria");
-                      },
-                    )
-                  ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -55,51 +136,49 @@ class _PerfilPageState extends State<PerfilPage> {
                     RawMaterialButton(
                       padding: const EdgeInsets.all(10),
                       onPressed: () async {
-                        //_registerStore.setPhotoCameraRosto();
-                        Navigator.pop(context);
+                        _newPhotoCamera();
                       },
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                        children: const [
                           Icon(
                             Icons.camera,
-                            color: Colors.amberAccent,
+                            color: Colors.white,
                             size: 50,
                           ),
                           Text(
                             'Câmera',
                             style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'Calibri',
-                            ),
+                                fontSize: 12,
+                                fontFamily: 'Calibri',
+                                color: Colors.white),
                           )
                         ],
                       ),
                     ),
                     RawMaterialButton(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       onPressed: () async {
-                        //_registerStore.setPhotoGaleriaRosto();
-                        Navigator.pop(context);
+                        _newPhotoGaleria();
                       },
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                        children: const [
                           Icon(
                             Icons.image_outlined,
-                            color: Colors.black54,
+                            color: Colors.white,
                             size: 50,
                           ),
                           Text(
                             'Galeria',
                             style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'Calibri',
-                            ),
+                                fontSize: 12,
+                                fontFamily: 'Calibri',
+                                color: Colors.white),
                           )
                         ],
                       ),
@@ -109,13 +188,10 @@ class _PerfilPageState extends State<PerfilPage> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: TextField(
-                    // controller: _controllerNome,
+                    controller: _controllerNome,
                     autofocus: false,
                     keyboardType: TextInputType.text,
                     style: const TextStyle(fontSize: 20),
-                    /*onChanged: (texto){
-                      _atualizarNomeFirestore(texto);
-                    },*/
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
                       hintText: "Nome",
@@ -140,7 +216,7 @@ class _PerfilPageState extends State<PerfilPage> {
                       borderRadius: BorderRadius.circular(32),
                     ),
                     onPressed: () {
-                      // _atualizarNomeFirestore();
+                      _atualizarDados();
                     },
                   ),
                 )

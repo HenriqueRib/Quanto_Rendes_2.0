@@ -87,6 +87,7 @@ class _PageEditarState extends State<PageEditar> {
   }
 
   _salvarAbastecimento() async {
+    //TODO:adicionar try catch
     final prefs = await SharedPreferences.getInstance();
 
     final String? _email = prefs.getString('email');

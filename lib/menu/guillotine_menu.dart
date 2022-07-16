@@ -67,7 +67,7 @@ class _GuillotineMenuState extends State<GuillotineMenu>
   @override
   void initState() {
     super.initState();
-    getTitle();
+    _getTitle();
     menuAnimationStatus = _GuillotineAnimationStatus.closed;
 
     ///
@@ -126,7 +126,7 @@ class _GuillotineMenuState extends State<GuillotineMenu>
     super.dispose();
   }
 
-  getTitle() async {
+  _getTitle() async {
     final prefs = await SharedPreferences.getInstance();
     // ignore: non_constant_identifier_names, unused_local_variable
     setState(() {

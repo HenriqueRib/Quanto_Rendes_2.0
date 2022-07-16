@@ -13,11 +13,11 @@ class Editar extends StatefulWidget {
 class _EditarState extends State<Editar> {
   @override
   void initState() {
-    getTitle();
+    _getTitle();
     super.initState();
   }
 
-  getTitle() async {
+  _getTitle() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('menu_title', 'Editar');
   }

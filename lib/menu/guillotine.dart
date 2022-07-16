@@ -13,11 +13,11 @@ class Guillotine extends StatefulWidget {
 class _GuillotineState extends State<Guillotine> {
   @override
   void initState() {
-    getTitle();
+    _getTitle();
     super.initState();
   }
 
-  getTitle() async {
+  _getTitle() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('menu_title', 'Quanto Rendes');
   }

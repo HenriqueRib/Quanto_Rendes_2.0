@@ -60,7 +60,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
       Response res = await dioInstance()
           .post("/quanto_rendes/delete_registro", data: data);
       if (res.data['status'] == 'success') {
-        print(res.data);
+        // print(res.data);
         getAbastecimento();
         SnacCustom.success(
           title: "Legal",
@@ -174,7 +174,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
               String _data = item["data"];
               DateTime dt = DateTime.parse(_data);
               _data = DateFormat("d/MM/yyyy HH:mm:ss").format(dt);
-              print(item);
+              // print(item);
               String _kmRodados = item["km_rodados"] == 0
                   ? 'Não Contabilizado'
                   : item["km_rodados"].toString();

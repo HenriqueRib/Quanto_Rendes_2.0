@@ -68,6 +68,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/img/carro-azul.png
+    - assets/img/userdefault.png
 
 flutter_icons:
   android: true

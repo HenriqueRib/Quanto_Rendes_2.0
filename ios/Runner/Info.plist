@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need microphone access for uploading videos</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Precisa acessar a camera para realizar o uploading da imagem</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Need location access for updating nearby friends</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app will use your location to show cool stuffs near you.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Precisa acessar a galeria de fotos para realizar o uploading da imagem</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
