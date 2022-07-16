@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:quanto/dio_config.dart';
-import 'package:quanto/menu/guillotine.dart';
 import 'package:quanto/util/snac_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,7 +54,10 @@ class _PageEditarState extends State<PageEditar> {
           .post("/quanto_rendes/registro_abastecimento_show", data: data);
 
       //tratamento antes de atualizar
-      String _qtd = res.data['abastecimento']['qtd_litro_abstecido'] ?? '';
+      String _qtd =
+          res.data['abastecimento']['qtd_litro_abastecido'].toString();
+      _qtd.contains('.') ? _qtd : _qtd = _qtd + '.00';
+
       String _posto = res.data['abastecimento']['posto'] ?? '';
       String _valor_litro = res.data['abastecimento']['valor_litro'].toString();
       _valor_litro.contains('.')
@@ -90,9 +92,25 @@ class _PageEditarState extends State<PageEditar> {
     final String? _email = prefs.getString('email');
     final int? _id = prefs.getInt('id_editar');
 
-    FormData data = FormData.fromMap({'email': _email, 'id': _id});
+    FormData data = FormData.fromMap({
+      'email': _email,
+      'id': _id,
+      'km_atual': _controllerkmAtual.text,
+      'valor_litro': _controllerValorLitro.text,
+      'valor_reais': _controllerValorReais.text,
+      'qtd_litro_abastecido': _controllerQtdLitrosAbastecido.text,
+      'posto': _controllerPosto.text,
+    });
+
     Response res = await dioInstance()
         .post("/quanto_rendes/registro_abastecimento_edit", data: data);
+
+    if (res.data['status'] == 'success') {
+      SnacCustom.success(
+          title: "Legal",
+          message: "Suas informações foram editadas com Sucesso");
+      Navigator.pushReplacementNamed(context, "/tela_principal");
+    }
   }
 
   _limpar() {
@@ -259,15 +277,7 @@ class _PageEditarState extends State<PageEditar> {
                             ),
                           ),
                           onPressed: () {
-                            //TODO: Salvar a edicao dos novos dados do
-
                             _salvarAbastecimento();
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const Guillotine(),
-                            //   ),
-                            // );
                           },
                         ),
                       ),

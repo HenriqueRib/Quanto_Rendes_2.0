@@ -142,80 +142,91 @@ class _VisualizarPageState extends State<VisualizarPage> {
     );
   }
 
+  Future<void> _refresh() async {
+    getAbastecimento();
+    return Future.delayed(
+      const Duration(seconds: 1),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.teal[900],
-        height: MediaQuery.of(context).size.height * 1,
-        width: double.infinity,
-        padding: const EdgeInsets.only(top: 20),
-        child: ListView.builder(
-          padding: const EdgeInsets.only(top: 60),
-          itemCount: _itens.length,
-          itemBuilder: (context, indice) {
-            Map<String, dynamic> item = _itens[indice];
-            double _valorLitro = item["valor_litro"].toDouble();
-            int _id = item["id"];
-            int _kmAtual = item["km_atual"];
-            double _valorReais = item["valor_reais"].toDouble();
-            double _qtdLitro = item["qtd_litro_abastecido"].toDouble();
-            String _tipoCombustivel = item["tipo_combustivel"];
-            String _data = item["data"];
-            DateTime dt = DateTime.parse(_data);
-            _data = DateFormat("d/MM/yyyy HH:mm:ss").format(dt);
-            print(item);
-            String _kmRodados = item["km_rodados"] == 0
-                ? 'Não Contabilizado'
-                : item["km_rodados"].toString();
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        displacement: 200,
+        child: Container(
+          color: Colors.teal[900],
+          height: MediaQuery.of(context).size.height * 1,
+          width: double.infinity,
+          padding: const EdgeInsets.only(top: 20),
+          child: ListView.builder(
+            padding: const EdgeInsets.only(top: 60),
+            itemCount: _itens.length,
+            itemBuilder: (context, indice) {
+              Map<String, dynamic> item = _itens[indice];
+              double _valorLitro = item["valor_litro"].toDouble();
+              int _id = item["id"];
+              int _kmAtual = item["km_atual"];
+              double _valorReais = item["valor_reais"].toDouble();
+              double _qtdLitro = item["qtd_litro_abastecido"].toDouble();
+              String _tipoCombustivel = item["tipo_combustivel"];
+              String _data = item["data"];
+              DateTime dt = DateTime.parse(_data);
+              _data = DateFormat("d/MM/yyyy HH:mm:ss").format(dt);
+              print(item);
+              String _kmRodados = item["km_rodados"] == 0
+                  ? 'Não Contabilizado'
+                  : item["km_rodados"].toString();
 
-            return Slidable(
-              key: const ValueKey(0),
-              startActionPane: ActionPane(
-                motion: const ScrollMotion(),
-                // dismissible: DismissiblePane(onDismissed: () {
-                //   deletarInfo(context, _id);
-                // }),
-                children: [
-                  SlidableAction(
-                    onPressed: (BuildContext context) {
-                      deletarInfo(context, _id);
-                    },
-                    backgroundColor: const Color(0xFFFE4A49),
-                    foregroundColor: Colors.white,
-                    icon: Icons.delete,
-                    label: 'Delete',
-                  ),
-                ],
-              ),
-              endActionPane: ActionPane(
-                motion: const ScrollMotion(),
-                children: [
-                  SlidableAction(
-                    onPressed: (BuildContext context) {
-                      _editarInfo(context, _itens[indice]);
-                    },
-                    backgroundColor: const Color(0xFF0392CF),
-                    foregroundColor: Colors.white,
-                    icon: Icons.edit,
-                    label: 'Editar',
-                  ),
-                ],
-              ),
-              child: ListTile(
-                title: Text(
-                  "KM: $_kmAtual, Qtd litro:  $_qtdLitro, Valor: $_valorReais \nKM rodados: $_kmRodados",
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
+              return Slidable(
+                key: const ValueKey(0),
+                startActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  // dismissible: DismissiblePane(onDismissed: () {
+                  //   deletarInfo(context, _id);
+                  // }),
+                  children: [
+                    SlidableAction(
+                      onPressed: (BuildContext context) {
+                        deletarInfo(context, _id);
+                      },
+                      backgroundColor: const Color(0xFFFE4A49),
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete,
+                      label: 'Delete',
+                    ),
+                  ],
                 ),
-                subtitle: Text(
-                  "Combustível: $_tipoCombustivel litro a $_valorLitro em $_data",
-                  style: const TextStyle(
-                    color: Colors.white,
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      onPressed: (BuildContext context) {
+                        _editarInfo(context, _itens[indice]);
+                      },
+                      backgroundColor: const Color(0xFF0392CF),
+                      foregroundColor: Colors.white,
+                      icon: Icons.edit,
+                      label: 'Editar',
+                    ),
+                  ],
+                ),
+                child: ListTile(
+                  title: Text(
+                    "KM: $_kmAtual, Qtd litro:  $_qtdLitro, Valor: $_valorReais \nKM rodados: $_kmRodados",
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  subtitle: Text(
+                    "Combustível: $_tipoCombustivel litro a $_valorLitro em $_data",
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
