@@ -92,26 +92,39 @@ class _PageEditarState extends State<PageEditar> {
 
     final String? _email = prefs.getString('email');
     final int? _id = prefs.getInt('id_editar');
+    final int? _idUser = prefs.getInt('id');
 
-    FormData data = FormData.fromMap({
-      'email': _email,
-      'id': _id,
-      'km_atual': _controllerkmAtual.text,
-      'valor_litro': _controllerValorLitro.text,
-      'valor_reais': _controllerValorReais.text,
-      'qtd_litro_abastecido': _controllerQtdLitrosAbastecido.text,
-      'posto': _controllerPosto.text,
-    });
+    try {
+      FormData data = FormData.fromMap({
+        'email': _email,
+        'id': _id,
+        'km_atual': _controllerkmAtual.text,
+        'valor_litro': _controllerValorLitro.text,
+        'valor_reais': _controllerValorReais.text,
+        'qtd_litro_abastecido': _controllerQtdLitrosAbastecido.text,
+        'posto': _controllerPosto.text,
+        'id_user': _idUser,
+      });
 
-    Response res = await dioInstance()
-        .post("/quanto_rendes/registro_abastecimento_edit", data: data);
+      Response res = await dioInstance()
+          .post("/quanto_rendes/registro_abastecimento_edit", data: data);
 
-    if (res.data['status'] == 'success') {
-      SnacCustom.success(
-          title: "Legal",
-          message: "Suas informações foram editadas com Sucesso");
-      Navigator.pushReplacementNamed(context, "/tela_principal");
+      if (res.data['status'] == 'success') {
+        SnacCustom.success(
+            title: "Legal",
+            message: "Suas informações foram editadas com Sucesso");
+        Navigator.pushReplacementNamed(context, "/tela_principal");
+      }
+    } catch (e) {
+      String message = "Erro! Tente novamente mais tarde.";
+      if (e is DioError) {
+        if (e.response?.data['message'] != null) {
+          message = e.response?.data['message'];
+        }
+      }
+      print('ERRO $e');
     }
+    //TODO: Falta adicionar mensagem de pop up de erro caso aconteca tipo falta de
   }
 
   _limpar() {
