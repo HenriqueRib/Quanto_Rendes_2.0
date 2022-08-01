@@ -55,7 +55,7 @@ class _MenuState extends State<Menu> {
                                     child: Padding(
                                       padding: EdgeInsets.only(top: 10),
                                       child: Text(
-                                        "t2t2aaaaaaaaaa",
+                                        "",
                                         style: TextStyle(
                                           fontSize: 50,
                                           color: Colors.white,
@@ -63,32 +63,27 @@ class _MenuState extends State<Menu> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 40),
-                                    child: SizedBox(
-                                      height: 100,
-                                      child: ListView(
-                                        scrollDirection: Axis.horizontal,
-                                        children: List.generate(
-                                          2,
-                                          (index) {
-                                            return MenuCard(
-                                              index: index,
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 0),
-                                    child: Text("t2a"),
-                                  ),
-                                  Text("t1"),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       vertical: 40),
+                                  //   child: SizedBox(
+                                  //     height: 100,
+                                  //     child: ListView(
+                                  //       scrollDirection: Axis.horizontal,
+                                  //       children: List.generate(
+                                  //         2,
+                                  //         (index) {
+                                  //           return MenuCard(
+                                  //             index: index,
+                                  //           );
+                                  //         },
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Center(
                                     child: Text(
-                                      "t2aaaaaaaaaa",
+                                      "",
                                       style: TextStyle(
                                         fontSize: 50,
                                         color: Colors.white,
@@ -99,7 +94,7 @@ class _MenuState extends State<Menu> {
                                     child: Padding(
                                       padding: EdgeInsets.only(top: 100),
                                       child: Text(
-                                        "t2t2aaaaaaaaaa",
+                                        "",
                                         style: TextStyle(
                                           fontSize: 50,
                                           color: Colors.white,
@@ -107,66 +102,9 @@ class _MenuState extends State<Menu> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 100),
-                                    child: Text("t2"),
-                                  ),
-                                  Text("t1"),
                                   Center(
                                     child: Text(
-                                      "t2aaaaaaaaaa",
-                                      style: TextStyle(
-                                        fontSize: 50,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(top: 100),
-                                      child: Text(
-                                        "t2t2aaaaaaaaaa",
-                                        style: TextStyle(
-                                          fontSize: 50,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 100),
-                                    child: Text("t2"),
-                                  ),
-                                  Text("t1"),
-                                  Center(
-                                    child: Text(
-                                      "t2aaaaaaaaaa",
-                                      style: TextStyle(
-                                        fontSize: 50,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(top: 100),
-                                      child: Text(
-                                        "t2t2aaaaaaaaaa",
-                                        style: TextStyle(
-                                          fontSize: 50,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 100),
-                                    child: Text("t2"),
-                                  ),
-                                  Text("t1"),
-                                  Center(
-                                    child: Text(
-                                      "t2aaaaaaaaaa",
+                                      "",
                                       style: TextStyle(
                                         fontSize: 50,
                                         color: Colors.white,
