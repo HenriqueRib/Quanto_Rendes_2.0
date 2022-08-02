@@ -53,7 +53,7 @@ class _MenuState extends State<Menu> {
                                 children: <Widget>[
                                   Container(
                                     child: Padding(
-                                      padding: EdgeInsets.only(top: 10),
+                                      padding: EdgeInsets.only(top: 35),
                                       child: Text(
                                         "",
                                         style: TextStyle(
@@ -63,24 +63,24 @@ class _MenuState extends State<Menu> {
                                       ),
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       vertical: 40),
-                                  //   child: SizedBox(
-                                  //     height: 100,
-                                  //     child: ListView(
-                                  //       scrollDirection: Axis.horizontal,
-                                  //       children: List.generate(
-                                  //         2,
-                                  //         (index) {
-                                  //           return MenuCard(
-                                  //             index: index,
-                                  //           );
-                                  //         },
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 40),
+                                    child: SizedBox(
+                                      height: 100,
+                                      child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: List.generate(
+                                          2,
+                                          (index) {
+                                            return MenuCard(
+                                              index: index,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                   Center(
                                     child: Text(
                                       "",
