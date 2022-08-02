@@ -29,7 +29,7 @@ class _PerfilPageState extends State<PerfilPage> {
       });
       Response res =
           await dioInstance().post("/quanto_rendes/user", data: data);
-      print(res.data['data'][0]);
+      // print(res.data['data'][0]);
 
       setState(() {
         _controllerNome.text = res.data['data'][0]['name'];
@@ -76,7 +76,7 @@ class _PerfilPageState extends State<PerfilPage> {
         Navigator.pushReplacementNamed(context, "/tela_principal");
       }
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 

@@ -1,23 +1,24 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MenuCard extends StatelessWidget {
-  const MenuCard({Key? key, this.index}) : super(key: key);
+  const MenuCard({Key? key, this.index, this.menuItem}) : super(key: key);
 
   final index;
+  final menuItem;
 
   @override
   Widget build(BuildContext context) {
-    var url = 'imgs/header/userdefault.png';
-
     return Padding(
       padding: index == 0
-          ? EdgeInsets.symmetric(horizontal: .1.sw)
-          : EdgeInsets.only(right: .1.sw),
+          ? EdgeInsets.symmetric(horizontal: .05.sw)
+          : EdgeInsets.only(right: .05.sw),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: AspectRatio(
-          aspectRatio: 1.7,
+          aspectRatio: 1.3,
           child: Stack(
             children: [
               SizedBox(
@@ -31,36 +32,44 @@ class MenuCard extends StatelessWidget {
                   color: Colors.black54,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: .02.sh,
-                  horizontal: .05.sw,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Testando",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
+              Center(
+                child: Padding(
+                  // padding: EdgeInsets.symmetric(
+                  //   // vertical: .04.sh,
+                  //   horizontal: .05.sw,
+                  // ),
+                  padding: const EdgeInsets.only(left: 0, top: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        // alignment: Alignment.bottomRight,
+                        child: Icon(
+                          menuItem[index]["icon"],
+                          color: menuItem[index]["color"],
+                        ),
                       ),
-                    ),
-                    const Align(
-                      alignment: Alignment.bottomRight,
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
+                      Text(
+                        menuItem[index]['title'],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      menuItem[index]["route"],
+                    );
+                  },
                   customBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

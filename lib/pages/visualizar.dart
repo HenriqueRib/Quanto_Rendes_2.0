@@ -144,8 +144,12 @@ class _VisualizarPageState extends State<VisualizarPage> {
 
   Future<void> _refresh() async {
     getAbastecimento();
+
     return Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 0),
+      SnacCustom.success(
+          title: "Legal",
+          message: "Suas informações foram atualizadas com Sucesso"),
     );
   }
 

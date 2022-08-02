@@ -87,7 +87,6 @@ class _PageEditarState extends State<PageEditar> {
   }
 
   _salvarAbastecimento() async {
-    //TODO:adicionar try catch
     final prefs = await SharedPreferences.getInstance();
 
     final String? _email = prefs.getString('email');
@@ -122,9 +121,9 @@ class _PageEditarState extends State<PageEditar> {
           message = e.response?.data['message'];
         }
       }
-      print('ERRO $e');
+      // print('ERRO $e');
     }
-    //TODO: Falta adicionar mensagem de pop up de erro caso aconteca tipo falta de
+    //TODO: Falta adicionar mensagem de pop up de erro caso aconteca tipo falta de internet .. melhorar try catch
   }
 
   _limpar() {
