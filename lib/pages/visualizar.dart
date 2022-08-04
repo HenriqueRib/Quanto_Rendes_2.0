@@ -218,11 +218,11 @@ class _VisualizarPageState extends State<VisualizarPage> {
                 ),
                 child: ListTile(
                   title: Text(
-                    "KM: $_kmAtual, Qtd litro:  $_qtdLitro, Valor: $_valorReais \nKM rodados: $_kmRodados",
+                    "KM: $_kmAtual, KM rodados: $_kmRodados \nQtd litro:  $_qtdLitro, Valor: R\$$_valorReais",
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                   subtitle: Text(
-                    "Combustível: $_tipoCombustivel litro a $_valorLitro em $_data",
+                    "Combustível: $_tipoCombustivel litro a $_valorLitro. \nNo dia $_data",
                     style: const TextStyle(
                       color: Colors.white,
                     ),

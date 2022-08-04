@@ -143,8 +143,29 @@ class _MenuState extends State<Menu> {
                                   ),
                                   Center(
                                     child: Text(
-                                      "Bem vindo $nome \n ao Quanto Rendes",
+                                      "Bem-vindo $nome \n ao Quanto Rendes",
                                       style: const TextStyle(
+                                        fontSize: 21,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      "",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(25),
+                                    alignment: Alignment.topLeft,
+                                    child: const Text(
+                                      "Seu Km atual:  \nValor total gasto no mês:  \nMedia de Kilometragem por Litro:  \nSeu Km atual:  \nSeu Km atual:  \nSeu Km atual:  \n",
+                                      style: TextStyle(
                                         fontSize: 21,
                                         color: Colors.white,
                                       ),
