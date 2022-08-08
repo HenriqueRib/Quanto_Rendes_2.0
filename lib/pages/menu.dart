@@ -160,13 +160,24 @@ class _MenuState extends State<Menu> {
                                       ),
                                     ),
                                   ),
+                                  // Container(
+                                  //   padding: const EdgeInsets.all(25),
+                                  //   alignment: Alignment.topLeft,
+                                  //   child: const Text(
+                                  //     "Seu Km atual:  \nValor total gasto no mês:  \nMedia de Kilometragem por Litro:  \nSeu Km atual:  \nSeu Km atual:  \nSeu Km atual:  \n",
+                                  //     style: TextStyle(
+                                  //       fontSize: 21,
+                                  //       color: Colors.white,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Container(
-                                    padding: const EdgeInsets.all(25),
+                                    padding: const EdgeInsets.all(20),
                                     alignment: Alignment.topLeft,
                                     child: const Text(
-                                      "Seu Km atual:  \nValor total gasto no mês:  \nMedia de Kilometragem por Litro:  \nSeu Km atual:  \nSeu Km atual:  \nSeu Km atual:  \n",
+                                      "Informações \n\nSeu Km atual:  \nValor total gasto no mês com combustivel:  \nMedia de Kilometragem rodados por Litro:  \n Kilometragem rodados pelo mês atual:  \n Quantidade de vezes abastecido por mês: \n\n\n\n ",
                                       style: TextStyle(
-                                        fontSize: 21,
+                                        fontSize: 22,
                                         color: Colors.white,
                                       ),
                                     ),

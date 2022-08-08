@@ -126,7 +126,7 @@ class _MarcarPageState extends State<MarcarPage> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(
-                      bottom: 0,
+                      bottom: 90,
                     ),
                     child: Text(
                       _textoResultado,

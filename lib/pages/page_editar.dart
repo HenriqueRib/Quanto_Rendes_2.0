@@ -59,20 +59,20 @@ class _PageEditarState extends State<PageEditar> {
       _qtd.contains('.') ? _qtd : _qtd = _qtd + '.00';
 
       String _posto = res.data['abastecimento']['posto'] ?? '';
-      String _valor_litro = res.data['abastecimento']['valor_litro'].toString();
-      _valor_litro.contains('.')
-          ? _valor_litro
-          : _valor_litro = _valor_litro + '.00';
-      String _valor_reais = res.data['abastecimento']['valor_reais'].toString();
-      _valor_reais.contains('.')
-          ? _valor_reais
-          : _valor_reais = _valor_reais + '.00';
+      String _valorLitro = res.data['abastecimento']['valor_litro'].toString();
+      _valorLitro.contains('.')
+          ? _valorLitro
+          : _valorLitro = _valorLitro + '.00';
+      String _valorReais = res.data['abastecimento']['valor_reais'].toString();
+      _valorReais.contains('.')
+          ? _valorReais
+          : _valorReais = _valorReais + '.00';
 
       setState(() {
         _controllerkmAtual.text =
             res.data['abastecimento']['km_atual'].toString();
-        _controllerValorLitro.text = _valor_litro;
-        _controllerValorReais.text = _valor_reais;
+        _controllerValorLitro.text = _valorLitro;
+        _controllerValorReais.text = _valorReais;
         _controllerQtdLitrosAbastecido.text = _qtd;
         _controllerPosto.text = _posto;
       });
