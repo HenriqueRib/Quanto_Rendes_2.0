@@ -174,12 +174,24 @@ class _MenuState extends State<Menu> {
                                   Container(
                                     padding: const EdgeInsets.all(20),
                                     alignment: Alignment.topLeft,
-                                    child: const Text(
-                                      "Informações \n\nSeu Km atual:  \nValor total gasto no mês com combustivel:  \nMedia de Kilometragem rodados por Litro:  \n Kilometragem rodados pelo mês atual:  \n Quantidade de vezes abastecido por mês: \n\n\n\n ",
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.white,
-                                      ),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          height: 800,
+                                          width: 2000,
+                                          decoration: const BoxDecoration(
+                                            color: Colors.black54,
+                                          ),
+                                          padding: const EdgeInsets.all(20),
+                                          child: const Text(
+                                            "Informações \n\nSeu Km atual:  \nValor total gasto no mês com combustivel:  \nMedia de Kilometragem rodados por Litro:  \n Kilometragem rodados pelo mês atual:  \n Quantidade de vezes abastecido por mês: \n\n\n\n ",
+                                            style: TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
