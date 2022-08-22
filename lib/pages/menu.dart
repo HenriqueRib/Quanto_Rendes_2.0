@@ -177,7 +177,7 @@ class _MenuState extends State<Menu> {
                                     child: Stack(
                                       children: [
                                         Container(
-                                          height: 800,
+                                          height: 500,
                                           width: 2000,
                                           decoration: const BoxDecoration(
                                             color: Colors.black54,
@@ -194,7 +194,50 @@ class _MenuState extends State<Menu> {
                                       ],
                                     ),
                                   ),
+
+                                  Container(
+                                    alignment: Alignment.topLeft,
+                                    padding: const EdgeInsets.all(20),
+                                    // padding: EdgeInsets.only(top: 5),
+                                    child: Card(
+                                      elevation: 0,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .surfaceVariant,
+                                      child: const SizedBox(
+                                        width: 800,
+                                        height: 100,
+                                        child: Center(
+                                          child: Text(
+                                            "Ola",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
+                              ),
+                              Center(
+                                child: Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color:
+                                          Theme.of(context).colorScheme.outline,
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12)),
+                                  ),
+                                  child: const SizedBox(
+                                    width: 300,
+                                    height: 100,
+                                    child: Center(child: Text('Outlined Card')),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
