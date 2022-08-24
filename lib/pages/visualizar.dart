@@ -173,6 +173,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
               int _id = item["id"];
               int _kmAtual = item["km_atual"];
               double _valorReais = item["valor_reais"].toDouble();
+              double _valorPorLitro = item["valorPorLitro"].toDouble();
               double _qtdLitro = item["qtd_litro_abastecido"].toDouble();
               String _tipoCombustivel = item["tipo_combustivel"];
               String _data = item["data"];
@@ -218,7 +219,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
                 ),
                 child: ListTile(
                   title: Text(
-                    "KM: $_kmAtual, KM rodados: $_kmRodados \nQtd litro:  $_qtdLitro, Valor: R\$$_valorReais",
+                    "KM: $_kmAtual, KM rodados: $_kmRodados \nKM por Quantidade de litro ${_valorPorLitro.toStringAsFixed(2)} \nQtd litro:  $_qtdLitro, Valor: R\$$_valorReais ",
                     style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                   subtitle: Text(
