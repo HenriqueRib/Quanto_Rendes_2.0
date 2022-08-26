@@ -25,7 +25,7 @@ class _MarcarPageState extends State<MarcarPage> {
   final FocusNode _focusKmAtual = FocusNode();
   final FocusNode _focusValorLitro = FocusNode();
   final FocusNode _focusValorReais = FocusNode();
-  final FocusNode _focusQtdLitro = FocusNode();
+  // final FocusNode _focusQtdLitro = FocusNode();
   final FocusNode _focusPosto = FocusNode();
   String dropdownValue = 'Etanol';
   String _textoResultado = "Registre seu abastecimento";
@@ -113,7 +113,7 @@ class _MarcarPageState extends State<MarcarPage> {
         _focusKmAtual.unfocus();
         _focusValorLitro.unfocus();
         _focusValorReais.unfocus();
-        _focusQtdLitro.unfocus();
+        // _focusQtdLitro.unfocus();
         _focusPosto.unfocus();
       },
       child: Scaffold(
@@ -188,24 +188,24 @@ class _MarcarPageState extends State<MarcarPage> {
                     ),
                     controller: _controllerValorReais,
                   ),
-                  TextField(
-                    focusNode: _focusQtdLitro,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: "Qtd em litros abastecido, ex: 40.61",
-                      suffixIcon: IconButton(
-                        onPressed: () => _controllerQtdLitrosAbastecido.clear(),
-                        icon: const Icon(
-                          Icons.clear,
-                        ),
-                      ),
-                    ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 19,
-                    ),
-                    controller: _controllerQtdLitrosAbastecido,
-                  ),
+                  // TextField(
+                  //   focusNode: _focusQtdLitro,
+                  //   keyboardType: TextInputType.number,
+                  //   decoration: InputDecoration(
+                  //     labelText: "Qtd em litros abastecido, ex: 40.61",
+                  //     suffixIcon: IconButton(
+                  //       onPressed: () => _controllerQtdLitrosAbastecido.clear(),
+                  //       icon: const Icon(
+                  //         Icons.clear,
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   style: const TextStyle(
+                  //     color: Colors.white,
+                  //     fontSize: 19,
+                  //   ),
+                  //   controller: _controllerQtdLitrosAbastecido,
+                  // ),
                   TextField(
                     focusNode: _focusPosto,
                     keyboardType: TextInputType.number,
@@ -229,7 +229,7 @@ class _MarcarPageState extends State<MarcarPage> {
                       top: 5,
                       left: 5,
                       right: 5,
-                      bottom: 10,
+                      bottom: 15,
                     ),
                     child: DropdownButton<String>(
                       isExpanded: true,
@@ -267,41 +267,30 @@ class _MarcarPageState extends State<MarcarPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: RaisedButton(
-                          color: Colors.teal,
-                          textColor: Colors.white,
-                          padding: const EdgeInsets.all(15),
-                          child: const Text(
-                            "Limpar info",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          onPressed: () => _limpar(),
+                      FlatButton(
+                        color: Colors.teal,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(15),
+                        child: const Text(
+                          "Limpar info",
+                          style: TextStyle(fontSize: 20),
                         ),
+                        onPressed: () => _limpar(),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 20,
-                          left: 15,
-                          right: 15,
-                        ),
-                        child: RaisedButton(
-                          color: Colors.teal,
-                          textColor: Colors.white,
-                          padding: const EdgeInsets.all(15),
-                          child: const Text(
-                            "Salvar",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
+                      FlatButton(
+                        color: Colors.teal,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(15),
+                        child: const Text(
+                          "Salvar",
+                          style: TextStyle(
+                            fontSize: 20,
                           ),
-                          //onPressed: _salvarAbastecimento
-                          onPressed: () {
-                            _salvarAbastecimento();
-                          },
                         ),
-                      ),
+                        onPressed: () {
+                          _salvarAbastecimento();
+                        },
+                      )
                     ],
                   ),
                 ],
