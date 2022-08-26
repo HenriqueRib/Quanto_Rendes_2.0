@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, deprecated_member_use, unused_label
 import 'dart:async';
 
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -23,6 +24,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
   @override
   void initState() {
     _getAbastecimento();
+    _verificaConexao();
     super.initState();
   }
 
@@ -30,7 +32,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
 
   void _getAbastecimento() async {
     final prefs = await SharedPreferences.getInstance();
-
     try {
       final String? _email = prefs.getString('email'); // Recuperar
       final int? _id = prefs.getInt('id'); // Recuperar
@@ -43,6 +44,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
         _itens = res.data['abastecimento'];
       });
     } catch (e) {
+      // print('ERRO $e');
       // String message = "Erro! Tente novamente mais tarde.";
       if (e is DioError) {
         if (e.response?.data['message'] != null) {
@@ -50,7 +52,6 @@ class _VisualizarPageState extends State<VisualizarPage> {
           // message = e.response?.data['message'];
         }
       }
-      print('ERRO $e');
     }
   }
 
@@ -145,17 +146,34 @@ class _VisualizarPageState extends State<VisualizarPage> {
     );
   }
 
+  _verificaConexao() async {
+    EasyLoading.show(status: 'Verificando Conexão...');
+    if (await ConnectivityWrapper.instance.isConnected) {
+      // print("Conectado");
+      EasyLoading.dismiss();
+    } else {
+      EasyLoading.dismiss();
+      EasyLoading.showError('Verifique sua conexão com a internet');
+      Navigator.pushReplacementNamed(context, "/menu");
+      Timer(const Duration(seconds: 20), () => EasyLoading.dismiss());
+      // print("DesConectado");
+    }
+  }
+
   Future<void> _refresh() async {
     EasyLoading.show(status: 'Carregando...');
-    _getAbastecimento();
-    Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
-
-    return Future.delayed(
-      const Duration(seconds: 0),
-      SnacCustom.success(
-          title: "Legal",
-          message: "Suas informações foram atualizadas com Sucesso"),
-    );
+    if (await ConnectivityWrapper.instance.isConnected) {
+      // print("Conectado");
+      _getAbastecimento();
+    } else {
+      // print("DesConectado");
+      EasyLoading.dismiss();
+      EasyLoading.showError('Verifique sua conexão com a internet');
+      Navigator.pushReplacementNamed(context, "/menu");
+      Timer(const Duration(seconds: 50), () => EasyLoading.dismiss());
+    }
+    EasyLoading.dismiss();
+    // return Future.delayed(const Duration(seconds: 0));
   }
 
   @override
