@@ -58,7 +58,7 @@ class _GuillotineMenuState extends State<GuillotineMenu>
     },
     {
       "icon": Icons.login,
-      "title": "Login",
+      "title": "Sair",
       "color": Colors.teal,
       'route': "/login"
     },
@@ -124,6 +124,12 @@ class _GuillotineMenuState extends State<GuillotineMenu>
   void dispose() {
     animationControllerMenu.dispose();
     super.dispose();
+  }
+
+  _deslogar() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', 'null');
+    print("Function Deslogar");
   }
 
   _getTitle() async {
@@ -240,6 +246,10 @@ class _GuillotineMenuState extends State<GuillotineMenu>
                           ),
                           title: RaisedButton(
                             onPressed: () {
+                              print(menuItem["route"]);
+                              if (menuItem["route"] == "/login") {
+                                _deslogar();
+                              }
                               Navigator.pushReplacementNamed(
                                 context,
                                 menuItem["route"],

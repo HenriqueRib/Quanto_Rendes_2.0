@@ -1,6 +1,9 @@
 // ignore_for_file: deprecated_member_use, avoid_print
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/dio_config.dart';
 import 'package:quanto/pages/aplicacao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,12 +27,15 @@ class _LoginState extends State<Login> {
   Future _verificarUsuarioLogado() async {
     final prefs = await SharedPreferences.getInstance();
     final String? _email = prefs.getString('email');
+    // print("página login $_email");
 
     if (_email != null) {
       //TODO: Melhorar isso por fazer uma requisição e ver se tem tokem valido
       //Direciona para a tela principal se tiver informação de e-mail
       //Melhor. Ao fazer o logof no aparelho apagar o e-mail.
-      Navigator.pushReplacementNamed(context, "/tela_principal");
+      if (_email != "null") {
+        Navigator.pushReplacementNamed(context, "/tela_principal");
+      }
     }
   }
 
@@ -43,6 +49,9 @@ class _LoginState extends State<Login> {
   final FocusNode _focusPassword = FocusNode();
 
   _validarCampos() {
+    EasyLoading.show(status: 'Carregando dados...');
+    Timer(const Duration(seconds: 5), () => EasyLoading.dismiss());
+    print("teste easy");
     //Recupera dados dos campos
     String email = _controllerEmail.text;
     String senha = _controllerSenha.text;
@@ -188,7 +197,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
+                    padding: const EdgeInsets.only(top: 20),
                     child: RaisedButton(
                       color: const Color(0xff91998A),
                       padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
@@ -204,32 +213,29 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 15, bottom: 0),
-                  ),
-                  Center(
-                    child: GestureDetector(
-                      child: const Text(
-                        "Não tem conta? cadastre-se!",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Cadastro(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: 20, bottom: 20)),
+                  // Center(
+                  //   child: GestureDetector(
+                  //     child: const Text(
+                  //       "Não tem conta? cadastre-se!",
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => const Cadastro(),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  const Padding(padding: EdgeInsets.only(top: 0, bottom: 20)),
                   Center(
                     child: RaisedButton(
                       child: const Text(
-                        "Apenas Calcular!",
+                        "Não tem conta? cadastre-se!",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       color: const Color(0x00000000),
@@ -241,7 +247,7 @@ class _LoginState extends State<Login> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Aplicacao(),
+                            builder: (context) => const Cadastro(),
                           ),
                         );
                       },
