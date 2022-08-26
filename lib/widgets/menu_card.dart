@@ -2,12 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuCard extends StatelessWidget {
   const MenuCard({Key? key, this.index, this.menuItem}) : super(key: key);
 
   final index;
   final menuItem;
+
+  _deslogar() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', 'null');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +71,9 @@ class MenuCard extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
+                    if (menuItem[index]["route"] == "/login") {
+                      _deslogar();
+                    }
                     Navigator.pushReplacementNamed(
                       context,
                       menuItem[index]["route"],

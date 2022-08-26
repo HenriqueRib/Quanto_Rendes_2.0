@@ -1,6 +1,9 @@
 // ignore_for_file: deprecated_member_use, avoid_print
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/util/snac_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../dio_config.dart';
@@ -32,6 +35,7 @@ class _MarcarPageState extends State<MarcarPage> {
 
   void _salvarAbastecimento() async {
     final prefs = await SharedPreferences.getInstance();
+    EasyLoading.show(status: 'Carregando...');
 
     try {
       final String? _email = prefs.getString('email'); // Recuperar
@@ -42,6 +46,7 @@ class _MarcarPageState extends State<MarcarPage> {
           _textoResultado =
               "Acredite se quiser ... voce não esta logado. \nFaça o Login por gentileza para salvar.";
         });
+        Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
         return;
       }
 
@@ -53,6 +58,7 @@ class _MarcarPageState extends State<MarcarPage> {
           _textoResultado =
               "Algo de errado não esta certo ...\nSubistua Vírgula , por ponto .";
         });
+        Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
         return;
       }
 
@@ -78,6 +84,7 @@ class _MarcarPageState extends State<MarcarPage> {
         setState(() {
           _textoResultado = "Informações Salva com Sucesso";
         });
+        Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
       }
     } catch (e) {
       String message = "Erro! Tente novamente mais tarde.";
@@ -91,6 +98,7 @@ class _MarcarPageState extends State<MarcarPage> {
       setState(() {
         _textoResultado = message;
       });
+      Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
     }
   }
 
@@ -275,6 +283,9 @@ class _MarcarPageState extends State<MarcarPage> {
                           "Limpar info",
                           style: TextStyle(fontSize: 20),
                         ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         onPressed: () => _limpar(),
                       ),
                       FlatButton(
@@ -286,6 +297,9 @@ class _MarcarPageState extends State<MarcarPage> {
                           style: TextStyle(
                             fontSize: 20,
                           ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         onPressed: () {
                           _salvarAbastecimento();

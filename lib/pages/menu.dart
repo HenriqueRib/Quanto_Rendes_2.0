@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/widgets/menu_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,7 +52,7 @@ class _MenuState extends State<Menu> {
     // },
     {
       "icon": Icons.login,
-      "title": "Login",
+      "title": "Sair",
       "color": Colors.teal,
       'route': "/login"
     },
@@ -64,7 +67,9 @@ class _MenuState extends State<Menu> {
   }
 
   Future<void> _refresh() async {
+    EasyLoading.show(status: 'Carregando Dados...');
     _getInfo();
+    Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
     return Future.delayed(
       const Duration(seconds: 1),
     );
@@ -75,7 +80,7 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: _refresh,
-        displacement: 700,
+        // displacement: 100,
         child: Stack(
           children: [
             Container(

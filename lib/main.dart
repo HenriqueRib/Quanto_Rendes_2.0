@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:async';
-import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/menu/configuracao.dart';
@@ -27,9 +26,6 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 Future<void> main() async {
-  //sharedPreferences = await SharedPreferences.getInstance();
-  //runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Home()));
-  //runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Login()));
   runApp(const MyApp());
 }
 
@@ -41,8 +37,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

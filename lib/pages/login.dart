@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/dio_config.dart';
-import 'package:quanto/pages/aplicacao.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cadastro.dart';
 
@@ -30,9 +29,6 @@ class _LoginState extends State<Login> {
     // print("página login $_email");
 
     if (_email != null) {
-      //TODO: Melhorar isso por fazer uma requisição e ver se tem tokem valido
-      //Direciona para a tela principal se tiver informação de e-mail
-      //Melhor. Ao fazer o logof no aparelho apagar o e-mail.
       if (_email != "null") {
         Navigator.pushReplacementNamed(context, "/tela_principal");
       }
@@ -49,9 +45,7 @@ class _LoginState extends State<Login> {
   final FocusNode _focusPassword = FocusNode();
 
   _validarCampos() {
-    EasyLoading.show(status: 'Carregando dados...');
-    Timer(const Duration(seconds: 5), () => EasyLoading.dismiss());
-    print("teste easy");
+    EasyLoading.show(status: 'Carregando...');
     //Recupera dados dos campos
     String email = _controllerEmail.text;
     String senha = _controllerSenha.text;
@@ -62,15 +56,18 @@ class _LoginState extends State<Login> {
           _mensagemErro = "";
         });
         _fazerLogin();
+        Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
       } else {
         setState(() {
           _mensagemErro = "Preencha a senha!";
         });
+        Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
       }
     } else {
       setState(() {
         _mensagemErro = "Preencha o E-mail utilizando @";
       });
+      Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
     }
   }
 

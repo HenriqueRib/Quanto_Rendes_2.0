@@ -129,7 +129,6 @@ class _GuillotineMenuState extends State<GuillotineMenu>
   _deslogar() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', 'null');
-    print("Function Deslogar");
   }
 
   _getTitle() async {
@@ -246,7 +245,6 @@ class _GuillotineMenuState extends State<GuillotineMenu>
                           ),
                           title: RaisedButton(
                             onPressed: () {
-                              print(menuItem["route"]);
                               if (menuItem["route"] == "/login") {
                                 _deslogar();
                               }

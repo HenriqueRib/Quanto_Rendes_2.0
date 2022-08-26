@@ -1,6 +1,9 @@
 // ignore_for_file: deprecated_member_use, avoid_print
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/dio_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +25,7 @@ class _CadastroState extends State<Cadastro> {
   String _mensagemErro = "";
 
   _validarCampos() {
+    EasyLoading.show(status: 'Carregando...');
     //Recupera dados dos campos
     // String nome = _controllerNome.text;
     String email = _controllerEmail.text;
@@ -35,17 +39,19 @@ class _CadastroState extends State<Cadastro> {
         });
 
         cadastrarNewUser();
-
+        Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
         // _logarUsuario(usuario);
       } else {
         setState(() {
           _mensagemErro = "Preencha a senha!";
         });
+        Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
       }
     } else {
       setState(() {
         _mensagemErro = "Preencha o E-mail utilizando @";
       });
+      Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
     }
   }
 

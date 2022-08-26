@@ -1,9 +1,11 @@
 // ignore_for_file: deprecated_member_use, duplicate_ignore
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quanto/dio_config.dart';
-import 'package:quanto/util/snac_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -55,27 +57,28 @@ class _PerfilPageState extends State<PerfilPage> {
   }
 
   _atualizarDados() async {
+    EasyLoading.show(status: 'Carregando...');
     final prefs = await SharedPreferences.getInstance();
     try {
       final String? _email = prefs.getString('email');
-
       FormData data = FormData.fromMap({
         'email': _email,
         'name': _controllerNome.text,
-        'image': await MultipartFile.fromFile(_photo!.path),
+        // 'image': await MultipartFile.fromFile(_photo!.path),
       });
       //TODO: Verificar porque nao esta salvando a imagem.
 
       Response res = await dioInstance().post("/auth/update/user", data: data);
-
       if (res.data['status'] == 'success') {
-        SnacCustom.success(
-            title: "Legal",
-            message:
-                "Suas informações de Perfil foram atualizadas com Sucesso");
+        await prefs.setString('nome', _controllerNome.text);
+        EasyLoading.dismiss();
+        EasyLoading.showSuccess(
+            'Suas informações de Perfil foram atualizadas com Sucesso');
         Navigator.pushReplacementNamed(context, "/tela_principal");
+        Timer(const Duration(seconds: 4), () => EasyLoading.dismiss());
       }
     } catch (e) {
+      Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
       // print(e);
     }
   }
