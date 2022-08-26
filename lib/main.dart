@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/menu/configuracao.dart';
 import 'package:quanto/menu/editar.dart';
 import 'package:quanto/menu/guillotine.dart';
@@ -51,23 +52,24 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.cyan,
         ),
-        builder: (context, widget) {
-          return Overlay(
-            initialEntries: [
-              OverlayEntry(
-                builder: (context) {
-                  return ToastProvider(
-                    child: MediaQuery(
-                      data:
-                          MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                      child: widget!,
-                    ),
-                  );
-                },
-              ),
-            ],
-          );
-        },
+        // builder: (context, widget) {
+        //   return Overlay(
+        //     initialEntries: [
+        //       OverlayEntry(
+        //         builder: (context) {
+        //           return ToastProvider(
+        //             child: MediaQuery(
+        //               data:
+        //                   MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        //               child: widget!,
+        //             ),
+        //           );
+        //         },
+        //       ),
+        //     ],
+        //   );
+        // },
+        builder: EasyLoading.init(),
         debugShowCheckedModeBanner: false,
         home: const Login(),
         routes: {
