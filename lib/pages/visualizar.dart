@@ -1,6 +1,9 @@
 // ignore_for_file: avoid_print, deprecated_member_use, unused_label
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:quanto/dio_config.dart';
@@ -19,13 +22,13 @@ class _VisualizarPageState extends State<VisualizarPage> {
 
   @override
   void initState() {
-    getAbastecimento();
+    _getAbastecimento();
     super.initState();
   }
 
   late List _itens = [];
 
-  void getAbastecimento() async {
+  void _getAbastecimento() async {
     final prefs = await SharedPreferences.getInstance();
 
     try {
@@ -61,7 +64,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
           .post("/quanto_rendes/delete_registro", data: data);
       if (res.data['status'] == 'success') {
         // print(res.data);
-        getAbastecimento();
+        _getAbastecimento();
         SnacCustom.success(
           title: "Legal",
           message: "Sua informações foi deletada com Sucesso",
@@ -143,7 +146,9 @@ class _VisualizarPageState extends State<VisualizarPage> {
   }
 
   Future<void> _refresh() async {
-    getAbastecimento();
+    EasyLoading.show(status: 'Carregando...');
+    _getAbastecimento();
+    Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
 
     return Future.delayed(
       const Duration(seconds: 0),
@@ -158,7 +163,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: _refresh,
-        displacement: 200,
+        displacement: 100,
         child: Container(
           color: Colors.teal[900],
           height: MediaQuery.of(context).size.height * 1,
