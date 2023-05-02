@@ -1,6 +1,8 @@
 # quanto
 
-A new Flutter project.
+A new Flutter project. Projeto esta com estrutura base de telas.
+Falta implementar funcionalidades e ajustar layout de telas.
+Funciona em Flutter 3.7.11
 
 ## Getting Started
 
