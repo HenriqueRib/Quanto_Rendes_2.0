@@ -1,5 +1,5 @@
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:quanto/store/config.dart';
+import 'package:teste_projeto_47/store/config.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

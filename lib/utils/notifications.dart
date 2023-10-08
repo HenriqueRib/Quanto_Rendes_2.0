@@ -1,6 +1,7 @@
 import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:teste_projeto_47/utils/constants.dart';
 
 class Notifications {
   static warning({
@@ -74,7 +75,7 @@ class Notifications {
               Icon(
                 Icons.info_outline,
                 size: 25.sp,
-                color: Colors.white,
+                color: Constants.color1,
               ),
               SizedBox(
                 width: 5.sp,
@@ -88,7 +89,7 @@ class Notifications {
                     Text(
                       "$title",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Constants.color1,
                         fontSize: 15.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -97,7 +98,7 @@ class Notifications {
                       "$message",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Constants.color1,
                         fontSize: 13.sp,
                         fontWeight: FontWeight.normal,
                       ),
@@ -112,7 +113,7 @@ class Notifications {
                 iconSize: 25.sp,
                 icon: const Icon(
                   Icons.close,
-                  color: Colors.white,
+                  color: Constants.color1,
                 ),
               ),
             ],

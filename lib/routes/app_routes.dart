@@ -1,16 +1,23 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-// impßort 'package:get_it/get_it.dart';
-import 'package:quanto/main.dart';
-import 'package:quanto/pages/contato/contato_menu_view.dart';
-import 'package:quanto/pages/login/login_view.dart';
-import 'package:quanto/pages/main/main_view.dart';
-import 'package:quanto/pages/perfil/perfil_menu_view.dart';
-import 'package:quanto/pages/sobre/sobre_menu_view.dart';
-import 'package:quanto/pages/splash/splash_view.dart';
+import 'package:teste_projeto_47/main.dart';
+import 'package:teste_projeto_47/pages/acolhimento/acolhimento.dart';
+import 'package:teste_projeto_47/pages/adicionar_radar/adicionar_radar.dart';
+import 'package:teste_projeto_47/pages/contato/contato_menu_view.dart';
+import 'package:teste_projeto_47/pages/escolher_responsavel/escolher_responsavel.dart';
+import 'package:teste_projeto_47/pages/licitacao/licitacao_view.dart';
+import 'package:teste_projeto_47/pages/login/login_view.dart';
+import 'package:teste_projeto_47/pages/main/main_view.dart';
+import 'package:teste_projeto_47/pages/mensagens/mensagens_view.dart';
+import 'package:teste_projeto_47/pages/notificacao/notificacao_view.dart';
+import 'package:teste_projeto_47/pages/perfil/perfil_view.dart';
+import 'package:teste_projeto_47/pages/pesquisa/itens/escolher_itens.dart';
+import 'package:teste_projeto_47/pages/pesquisa/pesquisa_view.dart';
+import 'package:teste_projeto_47/pages/sobre/sobre_menu_view.dart';
+import 'package:teste_projeto_47/pages/splash/splash_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 import '../pages/not_found/not_found_view.dart';
-
+import '../pages/registrar/registrar_view.dart';
 // final userStore = GetIt.I.get<UserStore>();
 
 class AppRoutes {
@@ -51,6 +58,11 @@ class AppRoutes {
       ],
     ),
     QRoute(
+      path: '/acolhimento',
+      name: 'acolhimento',
+      builder: () => const AcolhimentoView(),
+    ),
+    QRoute(
       path: '/contato',
       name: 'contato',
       builder: () => const ContatoMenuView(),
@@ -61,9 +73,39 @@ class AppRoutes {
       builder: () => const SobreMenuView(),
     ),
     QRoute(
-      path: '/perfil',
-      name: 'perfil',
-      builder: () => const PerfilMenuView(),
+      path: '/pesquisa',
+      name: 'pesquisa',
+      builder: () => PesquisaView(),
+    ),
+    QRoute(
+      path: '/escolher_itens',
+      name: 'escolher_itens',
+      builder: () => EscolherItens(),
+    ),
+    QRoute(
+      path: '/mensagens',
+      name: 'mensagens',
+      builder: () => MensagensView(),
+    ),
+    QRoute(
+      path: '/registrar',
+      name: 'registrar',
+      builder: () => RegistrarView(),
+    ),
+    QRoute(
+      path: '/licitacao',
+      name: 'licitacao',
+      builder: () => const LicitacaoView(),
+    ),
+    QRoute(
+      path: '/escolher_responsavel',
+      name: 'escolher_responsavel',
+      builder: () => EscolherResponsavel(),
+    ),
+    QRoute(
+      path: '/adicionar_radar',
+      name: 'adicionar_radar',
+      builder: () => AdicionarRadar(),
     ),
     QRoute(
       path: '/main',
@@ -76,6 +118,16 @@ class AppRoutes {
       //     onExitFunc: null,
       //   ),
       // ],
+    ),
+    QRoute(
+      path: '/notificacao',
+      name: 'notificacao',
+      builder: () => NotificacaoView(),
+    ),
+    QRoute(
+      path: '/perfil',
+      name: 'perfil',
+      builder: () => PerfilView(),
     ),
   ];
 }

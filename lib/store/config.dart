@@ -5,7 +5,7 @@ class Config = ConfigBase with _$Config;
 
 abstract class ConfigBase with Store {
   @observable
-  int selectedItemPositionMenu = 0;
+  int selectedItemPositionMenu = 2;
 
   @action
   atualiza(index) {

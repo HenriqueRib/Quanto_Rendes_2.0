@@ -1,16 +1,19 @@
+// ignore_for_file: deprecated_member_use
 import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quanto/routes/app_routes.dart';
-import 'package:quanto/store/config.dart';
-import 'package:quanto/utils/class_builder.dart';
-import 'package:quanto/utils/constants.dart';
-import 'package:quanto/utils/router_observer.dart';
+import 'package:teste_projeto_47/routes/app_routes.dart';
+import 'package:teste_projeto_47/store/config.dart';
+import 'package:teste_projeto_47/store/utils.dart';
+import 'package:teste_projeto_47/utils/class_builder.dart';
+import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:teste_projeto_47/utils/router_observer.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,9 +23,16 @@ SharedPreferences? sharedPreferences;
 SnakeShape snakeShape = SnakeShape.circle;
 bool showSelectedLabels = true;
 bool showUnselectedLabels = true;
-Color selectedColor = Constants.color5;
+Color selectedColor = Constants.color;
+Color unselectedColor = Constants.color;
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Constants.color,
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
 
@@ -30,8 +40,8 @@ void main() async {
   final getIt = GetIt.I;
   ClassBuilder.registerClasses();
   getIt.registerSingleton(Config());
+  getIt.registerSingleton(Utils());
   // getIt.registerSingleton(LoginStore());
-  // getIt.registerSingleton(UtilsStore());
   // getIt.registerSingleton(UserStore());
 
   runApp(
@@ -119,37 +129,6 @@ _getMenu(widget) {
   );
 }
 
-// class RestartWidget extends StatefulWidget {
-//   const RestartWidget({super.key, required this.child});
-
-//   final Widget child;
-
-//   static void restartApp(BuildContext context) {
-//     context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
-//   }
-
-//   @override
-//   _RestartWidgetState createState() => _RestartWidgetState();
-// }
-
-// class _RestartWidgetState extends State<RestartWidget> {
-//   Key key = UniqueKey();
-
-//   void restartApp() {
-//     setState(() {
-//       key = UniqueKey();
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return KeyedSubtree(
-//       key: key,
-//       child: widget.child,
-//     );
-//   }
-// }
-
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({Key? key}) : super(key: key);
 
@@ -158,16 +137,17 @@ class CustomBottomNavBar extends StatelessWidget {
     return Observer(
       builder: (_) {
         return SnakeNavigationBar.color(
-          backgroundColor: Colors.grey[800],
-          behaviour: SnakeBarBehaviour.floating,
-          snakeShape: SnakeShape.circle,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          padding: const EdgeInsets.all(8),
+          backgroundColor: Constants.color3,
+          behaviour: SnakeBarBehaviour.pinned,
+          // snakeShape: SnakeShape.rectangle,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3),
+          ),
+          padding: const EdgeInsets.all(0),
           snakeViewColor: selectedColor,
           selectedItemColor:
               snakeShape == SnakeShape.indicator ? selectedColor : null,
-          unselectedItemColor: Colors.white,
+          unselectedItemColor: unselectedColor,
           showUnselectedLabels: showUnselectedLabels,
           showSelectedLabels: showSelectedLabels,
           currentIndex: config.selectedItemPositionMenu,
@@ -178,33 +158,34 @@ class CustomBottomNavBar extends StatelessWidget {
           items: const [
             BottomNavigationBarItem(
               icon: FaIcon(
+                FontAwesomeIcons.plus,
+              ),
+              // label: 'Contato',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.list,
+              ),
+              // label: 'Contato',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(
                 FontAwesomeIcons.houseChimney,
-                color: Colors.white,
               ),
-              label: "inicio",
+              // label: "sobre",
             ),
             BottomNavigationBarItem(
               icon: FaIcon(
-                FontAwesomeIcons.comments,
-                color: Colors.white,
+                FontAwesomeIcons.bell,
               ),
-              label: 'Contato',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.download,
-                color: Colors.white,
-              ),
-              label: "sobre",
+              // label: "sobre",
             ),
             BottomNavigationBarItem(
               icon: FaIcon(
                 // FontAwesomeIcons.cartShopping,
                 FontAwesomeIcons.user,
-                color: Colors.white,
               ),
-              label: "Perfil",
-              // style: const TextStyle(color: Colors.red),
+              // label: "Perfil",
             ),
           ],
         );
@@ -216,27 +197,27 @@ class CustomBottomNavBar extends StatelessWidget {
 _setRota(index) {
   switch (index) {
     case 0:
+      QR.to('/registrar');
+      break;
+    case 1:
+      QR.to('/mensagens');
+      break;
+    case 2:
       if (QR.navigator.currentRoute.name == null) {
         QR.to('/main');
       } else {
         QR.navigator.replaceLast('/main');
       }
       break;
-    case 1:
-      QR.to('/contato');
-      break;
-    case 2:
-      QR.to('/sobre');
-      break;
     case 3:
+      QR.to('/notificacao');
+      break;
+    case 4:
       QR.to('/perfil');
       break;
     default:
       QR.navigator.replaceLast('/main');
       break;
-    // case 4:
-    //   QR.to('/perfil');
-    //   break;
   }
 }
 
@@ -246,9 +227,11 @@ validaTela(tela) {
       return false;
     case "/perfil":
       return false;
-    case "/sobre":
+    case "/mensagens":
       return false;
-    case "/contato":
+    case "/notificacao":
+      return false;
+    case "/registrar":
       return false;
   }
   return true;

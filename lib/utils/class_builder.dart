@@ -1,7 +1,7 @@
-import 'package:quanto/pages/contato/contato_view.dart';
-import 'package:quanto/pages/home/home_view.dart';
-import 'package:quanto/pages/perfil/perfil_view.dart';
-import 'package:quanto/pages/sobre/sobre_view.dart';
+import 'package:teste_projeto_47/pages/contato/contato_view.dart';
+import 'package:teste_projeto_47/pages/home/home_view.dart';
+// import 'package:teste_projeto_47/pages/perfil/perfil_view.dart';
+import 'package:teste_projeto_47/pages/sobre/sobre_view.dart';
 
 typedef Constructor<T> = T Function();
 
@@ -15,7 +15,7 @@ void register<T>(Constructor<T> constructor) {
 class ClassBuilder {
   static void registerClasses() {
     register<HomeView>(() => HomeView());
-    register<PerfilView>(() => PerfilView());
+    // register<PerfilView>(() => PerfilView());
     register<SobreView>(() => SobreView());
     register<ContatoView>(() => ContatoView());
     // register<DownloadPageView>(() => DownloadPageView());

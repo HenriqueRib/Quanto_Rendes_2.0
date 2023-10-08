@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quanto/utils/constants.dart';
+import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:flutter/material.dart';
 
 class FormFieldSnippet extends StatelessWidget {
   final GlobalKey<FormFieldState>? fieldKey;
@@ -51,6 +51,7 @@ class FormFieldSnippet extends StatelessWidget {
     this.cursorColor,
     this.style,
     this.textInputAction,
+    required Container child,
   }) : super(key: key);
 
   @override
@@ -60,7 +61,7 @@ class FormFieldSnippet extends StatelessWidget {
           constraints is BoxConstraints ? constraints! : const BoxConstraints(),
       child: Theme(
         data: ThemeData(
-          hintColor: Colors.white,
+          hintColor: Constants.color1,
           brightness:
               brightnessdark is bool ? Brightness.light : Brightness.dark,
         ),
