@@ -1,9 +1,9 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:teste_projeto_47/utils/notifications.dart';
+import 'package:quanto_rendes_2/utils/notifications.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
-import 'package:teste_projeto_47/store/utils.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
+import 'package:quanto_rendes_2/store/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qlevar_router/qlevar_router.dart';

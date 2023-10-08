@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:teste_projeto_47/main.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:quanto_rendes_2/main.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
 
 Future<Dio> dioInstance() async {
   Dio dio = Dio();

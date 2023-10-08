@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
-import 'package:teste_projeto_47/pages/login/componentes/logo_login.dart';
+import 'package:quanto_rendes_2/pages/login/componentes/logo_login.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:teste_projeto_47/store/utils.dart';
+import 'package:quanto_rendes_2/store/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 import '../login/componentes/menssage_login.dart';

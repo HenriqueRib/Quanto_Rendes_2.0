@@ -1,10 +1,10 @@
-import 'package:teste_projeto_47/pages/login/componentes/form_cadastrar.dart';
-import 'package:teste_projeto_47/pages/login/componentes/menssage_login.dart';
-import 'package:teste_projeto_47/pages/login/componentes/form_login.dart';
-import 'package:teste_projeto_47/pages/login/componentes/logo_login.dart';
+import 'package:quanto_rendes_2/pages/login/componentes/form_cadastrar.dart';
+import 'package:quanto_rendes_2/pages/login/componentes/menssage_login.dart';
+import 'package:quanto_rendes_2/pages/login/componentes/form_login.dart';
+import 'package:quanto_rendes_2/pages/login/componentes/logo_login.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:teste_projeto_47/store/utils.dart';
+import 'package:quanto_rendes_2/store/utils.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 

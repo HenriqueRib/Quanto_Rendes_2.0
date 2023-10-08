@@ -1,7 +1,7 @@
-import 'package:teste_projeto_47/pages/contato/contato_view.dart';
-import 'package:teste_projeto_47/pages/home/home_view.dart';
-// import 'package:teste_projeto_47/pages/perfil/perfil_view.dart';
-import 'package:teste_projeto_47/pages/sobre/sobre_view.dart';
+import 'package:quanto_rendes_2/pages/contato/contato_view.dart';
+import 'package:quanto_rendes_2/pages/home/home_view.dart';
+// import 'package:quanto_rendes_2/pages/perfil/perfil_view.dart';
+import 'package:quanto_rendes_2/pages/sobre/sobre_view.dart';
 
 typedef Constructor<T> = T Function();
 

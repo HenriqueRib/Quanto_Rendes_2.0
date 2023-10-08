@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:teste_projeto_47/pages/acolhimento/login_view.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:quanto_rendes_2/pages/acolhimento/login_view.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
 
 class LogoLogin extends StatelessWidget {
   const LogoLogin({super.key});

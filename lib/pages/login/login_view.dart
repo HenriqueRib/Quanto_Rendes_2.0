@@ -3,11 +3,11 @@
 import 'dart:async';
 
 import 'package:expandable_page_view/expandable_page_view.dart';
-import 'package:teste_projeto_47/pages/login/tab/login_tab1.dart';
-import 'package:teste_projeto_47/pages/login/tab/login_tab2.dart';
-import 'package:teste_projeto_47/pages/login/tab/login_tab3.dart';
-import 'package:teste_projeto_47/pages/login/tab/login_tab4.dart';
-import 'package:teste_projeto_47/store/utils.dart';
+import 'package:quanto_rendes_2/pages/login/tab/login_tab1.dart';
+import 'package:quanto_rendes_2/pages/login/tab/login_tab2.dart';
+import 'package:quanto_rendes_2/pages/login/tab/login_tab3.dart';
+import 'package:quanto_rendes_2/pages/login/tab/login_tab4.dart';
+import 'package:quanto_rendes_2/store/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

@@ -3,16 +3,16 @@ import 'dart:async';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:teste_projeto_47/pages/pesquisa/section/pesquisa_detalhes.dart';
-import 'package:teste_projeto_47/pages/pesquisa/section/pesquisar.dart';
+import 'package:quanto_rendes_2/pages/pesquisa/section/pesquisa_detalhes.dart';
+import 'package:quanto_rendes_2/pages/pesquisa/section/pesquisar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
-import 'package:teste_projeto_47/store/utils.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
+import 'package:quanto_rendes_2/store/utils.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:teste_projeto_47/widget/creditos.dart';
+import 'package:quanto_rendes_2/widget/creditos.dart';
 
 final utilStore = GetIt.I.get<Utils>();
 

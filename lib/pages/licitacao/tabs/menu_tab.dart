@@ -1,7 +1,7 @@
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:teste_projeto_47/pages/pesquisa/section/pesquisa_detalhes.dart';
+import 'package:quanto_rendes_2/pages/pesquisa/section/pesquisa_detalhes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class MenuTab extends StatefulWidget {

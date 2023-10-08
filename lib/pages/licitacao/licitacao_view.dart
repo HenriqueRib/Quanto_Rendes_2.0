@@ -1,17 +1,17 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, deprecated_member_use, library_private_types_in_public_api, sort_child_properties_last, prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:teste_projeto_47/pages/licitacao/tabs/anexos.dart';
-import 'package:teste_projeto_47/pages/licitacao/tabs/anotacoes.dart';
-import 'package:teste_projeto_47/pages/licitacao/tabs/info_gerais.dart';
-import 'package:teste_projeto_47/pages/licitacao/tabs/itens.dart';
-import 'package:teste_projeto_47/pages/licitacao/tabs/menssagens.dart';
-import 'package:teste_projeto_47/pages/licitacao/tabs/menu_tab.dart';
+import 'package:quanto_rendes_2/pages/licitacao/tabs/anexos.dart';
+import 'package:quanto_rendes_2/pages/licitacao/tabs/anotacoes.dart';
+import 'package:quanto_rendes_2/pages/licitacao/tabs/info_gerais.dart';
+import 'package:quanto_rendes_2/pages/licitacao/tabs/itens.dart';
+import 'package:quanto_rendes_2/pages/licitacao/tabs/menssagens.dart';
+import 'package:quanto_rendes_2/pages/licitacao/tabs/menu_tab.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:teste_projeto_47/store/utils.dart';
+import 'package:quanto_rendes_2/store/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 final utilStore = GetIt.I.get<Utils>();

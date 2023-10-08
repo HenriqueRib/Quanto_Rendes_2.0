@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-import 'package:teste_projeto_47/main.dart';
-import 'package:teste_projeto_47/store/config.dart';
-import 'package:teste_projeto_47/utils/class_builder.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:quanto_rendes_2/main.dart';
+import 'package:quanto_rendes_2/store/config.dart';
+import 'package:quanto_rendes_2/utils/class_builder.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 

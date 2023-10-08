@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:teste_projeto_47/utils/constants.dart';
+import 'package:quanto_rendes_2/utils/constants.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
