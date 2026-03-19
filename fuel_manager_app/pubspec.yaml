@@ -1,0 +1,38 @@
+name: fuel_manager
+description: "Gerenciador de Combustível - App totalmente offline para controle de abastecimentos"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  cupertino_icons: ^1.0.8
+  
+  # SQLite para persistência offline
+  sqflite: ^2.3.2
+  path: ^1.9.0
+  
+  # Gerenciamento de estado
+  provider: ^6.1.2
+  
+  # Formatação de números e datas
+  intl: ^0.19.0
+  
+  # Gráficos para estatísticas
+  fl_chart: ^0.66.2
+  
+  # Animações
+  flutter_animate: ^4.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
