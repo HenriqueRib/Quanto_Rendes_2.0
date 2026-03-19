@@ -28,6 +28,18 @@ dependencies:
   
   # Animações
   flutter_animate: ^4.5.0
+  
+  # Preferências locais (para código promocional e configurações)
+  shared_preferences: ^2.2.2
+  
+  # Anúncios do Google
+  google_mobile_ads: ^5.1.0
+  
+  # Compartilhamento
+  share_plus: ^7.2.2
+  
+  # Exportação de dados
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

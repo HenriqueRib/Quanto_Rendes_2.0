@@ -5,6 +5,8 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import 'providers/car_provider.dart';
 import 'providers/fuel_provider.dart';
+import 'providers/settings_provider.dart';
+import 'services/ad_service.dart';
 import 'utils/constants.dart';
 
 import 'screens/home/home_screen.dart';
@@ -14,6 +16,7 @@ import 'screens/fuel/fuel_entries_screen.dart';
 import 'screens/fuel/add_fuel_entry_screen.dart';
 import 'screens/calculator/calculator_screen.dart';
 import 'screens/statistics/statistics_screen.dart';
+import 'screens/settings/settings_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,12 +27,21 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  final settingsProvider = SettingsProvider();
+  await settingsProvider.init();
+
+  if (!settingsProvider.adsRemoved) {
+    await AdService().initialize();
+  }
   
-  runApp(const MyApp());
+  runApp(MyApp(settingsProvider: settingsProvider));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SettingsProvider settingsProvider;
+  
+  const MyApp({super.key, required this.settingsProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +49,29 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CarProvider()),
         ChangeNotifierProvider(create: (_) => FuelProvider()),
+        ChangeNotifierProvider.value(value: settingsProvider),
       ],
-      child: MaterialApp(
-        title: 'Gerenciador de Combustível',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        locale: const Locale('pt', 'BR'),
-        home: const MainNavigationScreen(),
-        routes: {
-          '/home': (context) => const MainNavigationScreen(),
-          '/cars': (context) => const CarsScreen(),
-          '/add-car': (context) => const AddCarScreen(),
-          '/fuel': (context) => const FuelEntriesScreen(),
-          '/add-fuel': (context) => const AddFuelEntryScreen(),
-          '/calculator': (context) => const CalculatorScreen(),
-          '/statistics': (context) => const StatisticsScreen(),
+      child: Consumer<SettingsProvider>(
+        builder: (context, settings, child) {
+          return MaterialApp(
+            title: 'Gerenciador de Combustível',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
+            locale: const Locale('pt', 'BR'),
+            home: const MainNavigationScreen(),
+            routes: {
+              '/home': (context) => const MainNavigationScreen(),
+              '/cars': (context) => const CarsScreen(),
+              '/add-car': (context) => const AddCarScreen(),
+              '/fuel': (context) => const FuelEntriesScreen(),
+              '/add-fuel': (context) => const AddFuelEntryScreen(),
+              '/calculator': (context) => const CalculatorScreen(),
+              '/statistics': (context) => const StatisticsScreen(),
+              '/settings': (context) => const SettingsScreen(),
+            },
+          );
         },
       ),
     );

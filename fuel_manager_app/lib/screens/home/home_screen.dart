@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/car_provider.dart';
 import '../../providers/fuel_provider.dart';
+import '../../providers/settings_provider.dart';
 import '../../utils/constants.dart';
 import '../../utils/formatters.dart';
 import '../../widgets/widgets.dart';
+import '../../widgets/ad_banner_widget.dart';
 import '../cars/add_car_screen.dart';
 import '../fuel/add_fuel_entry_screen.dart';
+import '../settings/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -128,6 +131,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+        IconButton(
+          icon: const Icon(Icons.settings),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const SettingsScreen()),
+          ),
+        ),
       ],
     );
   }
@@ -418,6 +428,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(bottom: 0),
                 child: FuelEntryCard(entry: entry),
               )),
+        const SizedBox(height: 16),
+        Consumer<SettingsProvider>(
+          builder: (context, settings, child) {
+            if (settings.adsRemoved) return const SizedBox.shrink();
+            return const AdBannerWidget();
+          },
+        ),
+        const SizedBox(height: 16),
       ],
     );
   }
