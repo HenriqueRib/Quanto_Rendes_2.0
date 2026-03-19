@@ -17,6 +17,11 @@ import 'screens/fuel/add_fuel_entry_screen.dart';
 import 'screens/calculator/calculator_screen.dart';
 import 'screens/statistics/statistics_screen.dart';
 import 'screens/settings/settings_screen.dart';
+import 'screens/more/more_screen.dart';
+import 'screens/maintenance/maintenance_screen.dart';
+import 'screens/stations/stations_screen.dart';
+import 'screens/goals/goals_screen.dart';
+import 'screens/statistics/vehicle_comparison_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +75,11 @@ class MyApp extends StatelessWidget {
               '/calculator': (context) => const CalculatorScreen(),
               '/statistics': (context) => const StatisticsScreen(),
               '/settings': (context) => const SettingsScreen(),
+              '/more': (context) => const MoreScreen(),
+              '/maintenance': (context) => const MaintenanceScreen(),
+              '/stations': (context) => const StationsScreen(),
+              '/goals': (context) => const GoalsScreen(),
+              '/comparison': (context) => const VehicleComparisonScreen(),
             },
           );
         },
@@ -93,7 +103,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     FuelEntriesScreen(),
     CalculatorScreen(),
     StatisticsScreen(),
-    CarsScreen(),
+    MoreScreen(),
   ];
 
   @override
@@ -136,9 +146,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             label: 'Estatísticas',
           ),
           NavigationDestination(
-            icon: Icon(Icons.directions_car_outlined),
-            selectedIcon: Icon(Icons.directions_car),
-            label: 'Veículos',
+            icon: Icon(Icons.more_horiz_outlined),
+            selectedIcon: Icon(Icons.more_horiz),
+            label: 'Mais',
           ),
         ],
       ),
